@@ -10,16 +10,14 @@ export default {
     return {};
   },
   mounted() {
-
     try {
-      window.map = new maplibregl.Map({
+      const map = new maplibregl.Map({
         container: 'map', // container id
-        style: 'style.json', // style URL
+        style: 'style.json' // style URL
       });
     } catch (error) {
-      console.log(':)')
+      console.log(':)');
     }
-
   },
   methods: {}
 };
@@ -27,9 +25,10 @@ export default {
 
 <style>
 #map {
+  position: absolute;
   height: 100%;
   width: 100%;
-  background-color: grey;
+  background-color: #f0f0f0;
   border: none;
   padding: 0;
   margin: 0;
