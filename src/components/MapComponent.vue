@@ -12,7 +12,7 @@ export default {
   mounted() {
 
     try {
-      var map = new maplibregl.Map({
+      window.map = new maplibregl.Map({
         container: 'map', // container id
         style: 'style.json', // style URL
       });
@@ -25,12 +25,14 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 #map {
   height: 100%;
   width: 100%;
   background-color: grey;
-  border-radius: 0.5rem;
-  overflow: hidden;
+  border: none;
+  padding: 0;
+  margin: 0;
+  /* overflow: hidden; */
 }
 </style>
