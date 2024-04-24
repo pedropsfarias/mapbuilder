@@ -43,7 +43,10 @@
   "sources": {
     "openmaptiles": {
       "type": "vector",
-      "tiles": ["https://s.geomattic.com/tiles/{z}/{x}/{y}.pbf"]
+      "tiles": [
+        "https://a.geomattic.com/data/v3/{z}/{x}/{y}.pbf",
+        "https://b.geomattic.com/data/v3/{z}/{x}/{y}.pbf"
+      ]
     }
   },
   "sprite": "https://demotiles.maplibre.org/styles/osm-bright-gl-style/sprite",

@@ -4,19 +4,22 @@
 
 <script lang="ts">
 import maplibregl from 'maplibre-gl';
-import mapconfig from '../assets/style.json';
 export default {
   components: {},
   data() {
     return {};
   },
   mounted() {
-    var map = new maplibregl.Map({
-      container: 'map', // container id
-      style: mapconfig, // style URL
-      center: [0, 0], // starting position [lng, lat]
-      zoom: 1 // starting zoom
-    });
+
+    try {
+      var map = new maplibregl.Map({
+        container: 'map', // container id
+        style: 'style.json', // style URL
+      });
+    } catch (error) {
+      console.log(':)')
+    }
+
   },
   methods: {}
 };

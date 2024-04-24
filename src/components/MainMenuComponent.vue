@@ -3,12 +3,10 @@
 </template>
 
 <script>
-import InputText from 'primevue/inputtext';
 import Menubar from 'primevue/menubar';
 
 export default {
   components: {
-    InputText,
     Menubar
   },
   data() {
