@@ -6,7 +6,7 @@
     @mousemove="horizontalResizeMouseMove"
   >
     <div ref="header" class="header" v-show="visible.header">
-      <div class="btn" @click="hide('header')">Fechar</div>
+      <main-menu-component></main-menu-component>
     </div>
     <div class="toolbar" v-show="visible.toolbar">
       <div class="btn" @click="hide('toolbar')">Fechar</div>
@@ -44,12 +44,14 @@
 <script>
 import MapComponent from '@/components/MapComponent.vue';
 import DockComponent from '@/layout/DockComponent.vue';
+import MainMenuComponent from '@/components/MainMenuComponent.vue';
 
 export default {
   name: 'MainLayoutComponent',
   components: {
     MapComponent,
-    DockComponent
+    DockComponent,
+    MainMenuComponent
   },
   props: {
     showHeader: {

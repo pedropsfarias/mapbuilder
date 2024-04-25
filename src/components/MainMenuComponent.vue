@@ -1,61 +1,44 @@
 <template>
-  <Menubar :model="itens" start="search" />
+  <Toolbar>
+    <template #start>
+      <ButtonPrime icon="pi pi-plus" class="mr-2" severity="secondary" />
+      <ButtonPrime icon="pi pi-print" class="mr-2" severity="secondary" />
+      <ButtonPrime icon="pi pi-upload" severity="secondary" />
+    </template>
+
+    <template #center>
+      <IconField iconPosition="left">
+        <InputIcon>
+          <i class="pi pi-search" />
+        </InputIcon>
+        <InputText placeholder="Search" />
+      </IconField>
+    </template>
+
+    <template #end> <SplitButton label="Save" :model="items"></SplitButton></template>
+  </Toolbar>
 </template>
 
 <script>
-import Menubar from 'primevue/menubar';
+import Toolbar from 'primevue/toolbar';
+import Button from 'primevue/button';
 
 export default {
   components: {
-    Menubar
+    Toolbar,
+    ButtonPrime: Button
   },
   data() {
     return {
       search: null,
       itens: [
         {
-          label: 'Home',
-          icon: 'pi pi-home'
+          label: 'Update',
+          icon: 'pi pi-refresh'
         },
         {
-          label: 'Features',
-          icon: 'pi pi-star'
-        },
-        {
-          label: 'Projects',
-          icon: 'pi pi-search',
-          items: [
-            {
-              label: 'Components',
-              icon: 'pi pi-bolt'
-            },
-            {
-              label: 'Blocks',
-              icon: 'pi pi-server'
-            },
-            {
-              label: 'UI Kit',
-              icon: 'pi pi-pencil'
-            },
-            {
-              label: 'Templates',
-              icon: 'pi pi-palette',
-              items: [
-                {
-                  label: 'Apollo',
-                  icon: 'pi pi-palette'
-                },
-                {
-                  label: 'Ultima',
-                  icon: 'pi pi-palette'
-                }
-              ]
-            }
-          ]
-        },
-        {
-          label: 'Contact',
-          icon: 'pi pi-envelope'
+          label: 'Delete',
+          icon: 'pi pi-times'
         }
       ]
     };
