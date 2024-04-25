@@ -5,6 +5,7 @@ import 'primeicons/primeicons.css';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import PrimeVue from 'primevue/config';
+import AppController from './classes/AppController';
 
 import App from './App.vue';
 import router from './router';
@@ -14,5 +15,7 @@ const app = createApp(App);
 app.use(PrimeVue);
 app.use(createPinia());
 app.use(router);
+
+app.config.globalProperties.app = new AppController();
 
 app.mount('#app');

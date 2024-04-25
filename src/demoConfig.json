@@ -1,0 +1,12 @@
+{
+  "controls": [
+    {
+      "title": "Measures",
+      "component": "MeasureComponent.vue",
+      "type": "widget",
+      "placement": "left",
+      "icon": "mdi-chart-bar",
+      "iconPlacement": "toolbar"
+    }
+  ]
+}

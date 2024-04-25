@@ -10,6 +10,7 @@ declare module 'vue' {
     InputText: typeof import('primevue/inputtext')['default']
     MainMenuComponent: typeof import('./src/components/MainMenuComponent.vue')['default']
     MapComponent: typeof import('./src/components/MapComponent.vue')['default']
+    MeasureComponent: typeof import('./src/components/MeasureComponent.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SplitButton: typeof import('primevue/splitbutton')['default']

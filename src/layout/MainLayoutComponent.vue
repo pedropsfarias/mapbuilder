@@ -8,18 +8,18 @@
     </div>
     <div class="left-sidebar" v-show="visible.leftSidebar">
       <div class="left resizer" ref="leftResizer" @mousedown="horizontalResizeMouseDown($event, 'left')"></div>
-      <dock-component></dock-component>
+      <dock-component ref="left"></dock-component>
     </div>
     <div class="right-sidebar" v-show="visible.rightSidebar">
       <div class="right resizer" ref="rightResizer" @mousedown="horizontalResizeMouseDown($event, 'right')"></div>
-      <dock-component></dock-component>
+      <dock-component ref="right"></dock-component>
     </div>
     <div ref="mapSection" class="map">
       <map-component></map-component>
     </div>
     <div class="footer" v-show="visible.footer">
       <div class="bottom resizer" ref="bottomtResizer" @mousedown="horizontalResizeMouseDown($event, 'bottom')"></div>
-      <dock-component></dock-component>
+      <dock-component ref="bottom"></dock-component>
     </div>
   </div>
 </template>
@@ -82,7 +82,13 @@ export default {
     };
   },
   mounted() {
+
     this.resize();
+
+    document.addEventListener("resize", () => {
+      this.resize();
+    });
+
   },
   methods: {
     hide(key) {
