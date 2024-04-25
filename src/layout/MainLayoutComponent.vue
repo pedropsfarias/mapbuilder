@@ -1,10 +1,5 @@
 <template>
-  <div
-    ref="container"
-    class="container"
-    @mouseup="horizontalResizeMouseUp"
-    @mousemove="horizontalResizeMouseMove"
-  >
+  <div ref="container" class="container" @mouseup="horizontalResizeMouseUp" @mousemove="horizontalResizeMouseMove">
     <div ref="header" class="header" v-show="visible.header">
       <main-menu-component></main-menu-component>
     </div>
@@ -12,30 +7,18 @@
       <div class="btn" @click="hide('toolbar')">Fechar</div>
     </div>
     <div class="left-sidebar" v-show="visible.leftSidebar">
-      <div
-        class="left resizer"
-        ref="leftResizer"
-        @mousedown="horizontalResizeMouseDown($event, 'left')"
-      ></div>
+      <div class="left resizer" ref="leftResizer" @mousedown="horizontalResizeMouseDown($event, 'left')"></div>
       <dock-component></dock-component>
     </div>
     <div class="right-sidebar" v-show="visible.rightSidebar">
-      <div
-        class="right resizer"
-        ref="rightResizer"
-        @mousedown="horizontalResizeMouseDown($event, 'right')"
-      ></div>
+      <div class="right resizer" ref="rightResizer" @mousedown="horizontalResizeMouseDown($event, 'right')"></div>
       <dock-component></dock-component>
     </div>
     <div ref="mapSection" class="map">
       <map-component></map-component>
     </div>
     <div class="footer" v-show="visible.footer">
-      <div
-        class="bottom resizer"
-        ref="bottomtResizer"
-        @mousedown="horizontalResizeMouseDown($event, 'bottom')"
-      ></div>
+      <div class="bottom resizer" ref="bottomtResizer" @mousedown="horizontalResizeMouseDown($event, 'bottom')"></div>
       <dock-component></dock-component>
     </div>
   </div>
@@ -90,6 +73,7 @@ export default {
       leftSidebarWidth: 320,
       rightSidebarWidth: 320,
       mouseIsDown: false,
+      hasMoved: false,
       resizePanel: null,
       startX: 0,
       startY: 0,
@@ -136,6 +120,7 @@ export default {
       this.resizePanel = painel;
     },
     horizontalResizeMouseUp() {
+      if (!this.hasMoved) return;
       this.mouseIsDown = false;
       this.startX = 0;
       this.startY = 0;
@@ -147,8 +132,8 @@ export default {
       } else if (this.resizePanel === 'bottom') {
         this.footerHeight += this.deltaY;
       }
-
       this.resize();
+      this.hasMoved = false;
     },
     horizontalResizeMouseMove(event) {
       if (!this.mouseIsDown) return;
@@ -165,6 +150,8 @@ export default {
         this.$refs.bottomtResizer.style.bottom = `${bodyHeight - event.clientY}px`;
         this.deltaY = bodyHeight - event.clientY - this.startY;
       }
+
+      this.hasMoved = true;
     }
   }
 };
@@ -180,7 +167,7 @@ export default {
   grid-template-columns: 320px auto 320px;
 }
 
-.container > div {
+.container>div {
   border: 1px solid #e8e8e8;
 }
 

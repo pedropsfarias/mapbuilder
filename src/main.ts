@@ -1,5 +1,5 @@
 import './assets/main.css';
-import 'primevue/resources/themes/md-light-indigo/theme.css';
+import 'primevue/resources/themes/aura-light-indigo/theme.css';
 import 'primeicons/primeicons.css';
 
 import { createApp } from 'vue';

@@ -7,25 +7,20 @@
     </template>
 
     <template #center>
-      <IconField iconPosition="left">
-        <InputIcon>
-          <i class="pi pi-search" />
-        </InputIcon>
-        <InputText placeholder="Search" />
-      </IconField>
+      <InputText placeholder="Procurar" />
     </template>
 
-    <template #end> <SplitButton label="Save" :model="items"></SplitButton></template>
+    <template #end>
+      <SplitButton label="Save" :model="items"></SplitButton>
+    </template>
   </Toolbar>
 </template>
 
 <script>
-import Toolbar from 'primevue/toolbar';
 import Button from 'primevue/button';
 
 export default {
   components: {
-    Toolbar,
     ButtonPrime: Button
   },
   data() {
