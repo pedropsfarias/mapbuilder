@@ -10,14 +10,12 @@ export default {
     return {};
   },
   mounted() {
-    try {
+    setTimeout(() => {
       const map = new maplibregl.Map({
         container: 'map', // container id
         style: 'style.json' // style URL
       });
-    } catch (error) {
-      console.log(':)');
-    }
+    }, 10);
   },
   methods: {}
 };

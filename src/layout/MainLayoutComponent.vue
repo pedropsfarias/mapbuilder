@@ -58,7 +58,7 @@ export default {
     },
     showToolbar: {
       type: Boolean,
-      default: true
+      default: false
     },
     showLeftSidebar: {
       type: Boolean,
@@ -70,7 +70,7 @@ export default {
     },
     showFooter: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   data() {
@@ -94,6 +94,9 @@ export default {
       deltaX: 0,
       deltaY: 0
     };
+  },
+  mounted() {
+    this.resize();
   },
   methods: {
     hide(key) {
