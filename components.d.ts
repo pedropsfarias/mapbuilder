@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    InlineToolbarComponent: typeof import('./src/components/InlineToolbarComponent.vue')['default']
     InputText: typeof import('primevue/inputtext')['default']
     MainMenuComponent: typeof import('./src/components/MainMenuComponent.vue')['default']
     MapComponent: typeof import('./src/components/MapComponent.vue')['default']

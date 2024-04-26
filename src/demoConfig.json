@@ -1,12 +1,13 @@
 {
   "controls": [
     {
+      "name": "measure",
       "title": "Measures",
       "component": "MeasureComponent.vue",
       "type": "widget",
       "placement": "left",
-      "icon": "mdi-chart-bar",
-      "iconPlacement": "toolbar"
+      "icon": "pi pi-plus",
+      "toolbar": "inline"
     }
   ]
 }

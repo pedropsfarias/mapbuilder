@@ -1,9 +1,7 @@
 <template>
   <Toolbar>
     <template #start>
-      <ButtonPrime icon="pi pi-plus" class="mr-2" severity="secondary" />
-      <ButtonPrime icon="pi pi-print" class="mr-2" severity="secondary" />
-      <ButtonPrime icon="pi pi-upload" severity="secondary" />
+      <InlineToolbarComponent />
     </template>
 
     <template #center>
@@ -17,11 +15,10 @@
 </template>
 
 <script>
-import Button from 'primevue/button';
-
+import InlineToolbarComponent from '@/components/InlineToolbarComponent.vue';
 export default {
   components: {
-    ButtonPrime: Button
+    InlineToolbarComponent
   },
   data() {
     return {
