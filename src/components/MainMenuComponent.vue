@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       search: null,
-      itens: [
+      items: [
         {
           label: 'Update',
           icon: 'pi pi-refresh'
