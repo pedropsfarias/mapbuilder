@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import MainLayoutComponent from './layout/MainLayoutComponent.vue';
+import MainLayoutComponent from './components/layout/MainLayoutComponent.vue';
 export default {
   components: {
     MainLayoutComponent

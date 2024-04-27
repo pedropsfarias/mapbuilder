@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import InlineToolbarComponent from '@/components/InlineToolbarComponent.vue';
+import InlineToolbarComponent from '@/components/layout/InlineToolbarComponent.vue';
 export default {
   components: {
     InlineToolbarComponent

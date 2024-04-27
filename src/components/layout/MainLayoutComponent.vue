@@ -1,33 +1,50 @@
 <template>
-  <div ref="container" class="container" @mouseup="horizontalResizeMouseUp" @mousemove="horizontalResizeMouseMove">
+  <div
+    ref="container"
+    class="container"
+    @mouseup="horizontalResizeMouseUp"
+    @mousemove="horizontalResizeMouseMove"
+  >
     <div ref="header" class="header" v-show="visible.header">
       <main-menu-component></main-menu-component>
     </div>
     <div class="toolbar" v-show="visible.toolbar">
       <div class="btn" @click="hide('toolbar')">Fechar</div>
     </div>
-    <div class="left-sidebar" v-show="visible.leftSidebar">
-      <div class="left resizer" ref="leftResizer" @mousedown="horizontalResizeMouseDown($event, 'left')"></div>
-      <dock-component ref="left"></dock-component>
+    <div class="left-sidebar" v-show="visible.left">
+      <div
+        class="left resizer"
+        ref="leftResizer"
+        @mousedown="horizontalResizeMouseDown($event, 'left')"
+      ></div>
+      <dock-component ref="left" name="left"></dock-component>
     </div>
-    <div class="right-sidebar" v-show="visible.rightSidebar">
-      <div class="right resizer" ref="rightResizer" @mousedown="horizontalResizeMouseDown($event, 'right')"></div>
-      <dock-component ref="right"></dock-component>
+    <div class="right-sidebar" v-show="visible.right">
+      <div
+        class="right resizer"
+        ref="rightResizer"
+        @mousedown="horizontalResizeMouseDown($event, 'right')"
+      ></div>
+      <dock-component ref="right" name="right"></dock-component>
     </div>
     <div ref="mapSection" class="map">
       <map-component></map-component>
     </div>
     <div class="footer" v-show="visible.footer">
-      <div class="bottom resizer" ref="bottomtResizer" @mousedown="horizontalResizeMouseDown($event, 'bottom')"></div>
-      <dock-component ref="bottom"></dock-component>
+      <div
+        class="bottom resizer"
+        ref="bottomtResizer"
+        @mousedown="horizontalResizeMouseDown($event, 'bottom')"
+      ></div>
+      <dock-component ref="bottom" name="bottom"></dock-component>
     </div>
   </div>
 </template>
 
 <script>
 import MapComponent from '@/components/MapComponent.vue';
-import DockComponent from '@/layout/DockComponent.vue';
-import MainMenuComponent from '@/components/MainMenuComponent.vue';
+import DockComponent from '@/components/layout/DockComponent.vue';
+import MainMenuComponent from '@/components/layout/MainMenuComponent.vue';
 
 export default {
   name: 'MainLayoutComponent',
@@ -47,11 +64,11 @@ export default {
     },
     showLeftSidebar: {
       type: Boolean,
-      default: true
+      default: false
     },
     showRightSidebar: {
       type: Boolean,
-      default: true
+      default: false
     },
     showFooter: {
       type: Boolean,
@@ -63,8 +80,8 @@ export default {
       visible: {
         header: this.showHeader,
         toolbar: this.showToolbar,
-        leftSidebar: this.showLeftSidebar,
-        rightSidebar: this.showRightSidebar,
+        left: this.showLeftSidebar,
+        right: this.showRightSidebar,
         footer: this.showFooter
       },
       headerHeight: 48,
@@ -82,16 +99,17 @@ export default {
     };
   },
   mounted() {
-
     this.resize();
 
-    document.addEventListener("resize", () => {
+    document.addEventListener('resize', () => {
       this.resize();
     });
 
+    this.app.registerCommand('layout:hideDock', this.hide);
   },
   methods: {
     hide(key) {
+      console.log('hide', key);
       if (key == 'map') return;
       this.visible[key] = false;
       this.resize();
@@ -101,8 +119,8 @@ export default {
       const toolbarHeight = this.visible.toolbar ? this.toolbarHeight : 0;
       const footerHeight = this.visible.footer ? this.footerHeight : 0;
 
-      const leftSidebarWidth = this.visible.leftSidebar ? this.leftSidebarWidth : 0;
-      const rightSidebarWidth = this.visible.rightSidebar ? this.rightSidebarWidth : 0;
+      const leftSidebarWidth = this.visible.left ? this.leftSidebarWidth : 0;
+      const rightSidebarWidth = this.visible.right ? this.rightSidebarWidth : 0;
 
       const bodyWidth = document.body.clientWidth;
       const bodyHeight = document.body.clientHeight;
@@ -112,6 +130,8 @@ export default {
 
       this.$refs.container.style.gridTemplateRows = `${headerHeight}px ${toolbarHeight}px auto ${footerHeight}px`;
       this.$refs.container.style.gridTemplateColumns = `${leftSidebarWidth}px auto ${rightSidebarWidth}px`;
+
+      this.app.emitter.emit('layout:resize');
     },
     horizontalResizeMouseDown(event, painel) {
       if (painel === 'left') {
@@ -173,7 +193,7 @@ export default {
   grid-template-columns: 320px auto 320px;
 }
 
-.container>div {
+.container > div {
   border: 1px solid #e8e8e8;
 }
 

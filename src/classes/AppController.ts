@@ -1,10 +1,12 @@
 import demoConfig from '../demoConfig.json';
+import mitt from 'mitt';
 
 class AppController {
   config: any;
   controls: any;
   commands: any;
   toolbars: any;
+  emitter: any;
   constructor() {
     this._loadConfig();
     this.commands = {};
@@ -14,16 +16,32 @@ class AppController {
     setTimeout(() => {
       this._createControls();
     }, 100);
+
+    const emitter = mitt();
+    this.emitter = emitter;
   }
 
   registerToolbar(toolbarName: any, toolbar: any) {
     this.toolbars[toolbarName] = toolbar;
   }
 
-  registerCommand(commandName: string, callback: Function) {
+  registerCommand(commandName: string, run: Function, undo: Function) {
     this.commands[commandName] = {
-      callback: callback
+      run: run,
+      undo: undo
     };
+
+    console.log('Command registered:', commandName);
+  }
+
+  run(commandName: string, payload: any) {
+    console.log('Running command:', commandName); // "Running command: bold"
+    const command = this.commands[commandName];
+    if (command) {
+      command.run(payload);
+    } else {
+      console.error('Command not found:', commandName);
+    }
   }
 
   _loadConfig() {

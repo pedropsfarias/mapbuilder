@@ -3,7 +3,7 @@
     {
       "name": "measure",
       "title": "Measures",
-      "component": "MeasureComponent.vue",
+      "component": "map/MeasureComponent.vue",
       "type": "widget",
       "placement": "left",
       "icon": "pi pi-plus",
