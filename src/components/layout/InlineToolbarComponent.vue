@@ -1,6 +1,6 @@
 <template>
   <div v-for="item in items" :key="item.label">
-    <ButtonPrime :icon="item.icon" class="mr-2" severity="secondary" />
+    <ButtonPrime :icon="item.icon" @click="open(item)" class="mr-2" severity="secondary" />
   </div>
 </template>
 
@@ -23,6 +23,13 @@ export default {
   methods: {
     addControl(item) {
       this.items.push(item);
+    },
+    open(item) {
+      console.log('open', item);
+
+      if (item.type == 'widget') {
+        const dock = this.app.getComponent('dock');
+      }
     }
   }
 };

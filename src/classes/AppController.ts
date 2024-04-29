@@ -7,6 +7,7 @@ class AppController {
   commands: any;
   toolbars: any;
   emitter: any;
+
   constructor() {
     this._loadConfig();
     this.commands = {};
@@ -15,7 +16,7 @@ class AppController {
 
     setTimeout(() => {
       this._createControls();
-    }, 100);
+    }, 10);
 
     const emitter = mitt();
     this.emitter = emitter;
@@ -42,6 +43,10 @@ class AppController {
     } else {
       console.error('Command not found:', commandName);
     }
+  }
+
+  getDock(name: string) {
+    return this.d;
   }
 
   _loadConfig() {
