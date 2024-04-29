@@ -28,7 +28,8 @@ export default {
       console.log('open', item);
 
       if (item.type == 'widget') {
-        const dock = this.app.getComponent('dock');
+        const dock = this.app.getDock(item.placement);
+        dock.openWidget(item);
       }
     }
   }

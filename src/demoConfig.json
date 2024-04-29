@@ -8,6 +8,15 @@
       "placement": "left",
       "icon": "pi pi-plus",
       "toolbar": "inline"
+    },
+    {
+      "name": "LayerSwitcher",
+      "title": "Layer Switcher",
+      "component": "map/LayerSwitcherComponent.vue",
+      "type": "widget",
+      "placement": "left",
+      "icon": "pi pi-circle",
+      "toolbar": "inline"
     }
   ]
 }

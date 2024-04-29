@@ -7,12 +7,14 @@ class AppController {
   commands: any;
   toolbars: any;
   emitter: any;
+  docks: any;
 
   constructor() {
     this._loadConfig();
     this.commands = {};
     this.controls = {};
     this.toolbars = {};
+    this.docks = {};
 
     setTimeout(() => {
       this._createControls();
@@ -24,6 +26,10 @@ class AppController {
 
   registerToolbar(toolbarName: any, toolbar: any) {
     this.toolbars[toolbarName] = toolbar;
+  }
+
+  registerDock(dockName: string, dock: any) {
+    this.docks[dockName] = dock;
   }
 
   registerCommand(commandName: string, run: Function, undo: Function) {
@@ -46,7 +52,7 @@ class AppController {
   }
 
   getDock(name: string) {
-    return this.d;
+    return this.docks[name];
   }
 
   _loadConfig() {

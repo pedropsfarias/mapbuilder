@@ -7,9 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    Avatar: typeof import('primevue/avatar')['default']
-    Badge: typeof import('primevue/badge')['default']
-    Button: typeof import('primevue/button')['default']
     DockComponent: typeof import('./src/components/layout/DockComponent.vue')['default']
     InlineToolbarComponent: typeof import('./src/components/layout/InlineToolbarComponent.vue')['default']
     InputText: typeof import('primevue/inputtext')['default']
@@ -20,7 +17,6 @@ declare module 'vue' {
     MeasureComponent: typeof import('./src/components/map/MeasureComponent.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    ScrollPanel: typeof import('primevue/scrollpanel')['default']
     SplitButton: typeof import('primevue/splitbutton')['default']
     TabPanel: typeof import('primevue/tabpanel')['default']
     TabView: typeof import('primevue/tabview')['default']

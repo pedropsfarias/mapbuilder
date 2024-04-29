@@ -1,10 +1,5 @@
 <template>
-  <div
-    ref="container"
-    class="container"
-    @mouseup="horizontalResizeMouseUp"
-    @mousemove="horizontalResizeMouseMove"
-  >
+  <div ref="container" class="container" @mouseup="horizontalResizeMouseUp" @mousemove="horizontalResizeMouseMove">
     <div ref="header" class="header" v-show="visible.header">
       <main-menu-component></main-menu-component>
     </div>
@@ -12,30 +7,18 @@
       <div class="btn" @click="hide('toolbar')">Fechar</div>
     </div>
     <div class="left-sidebar" v-show="visible.left">
-      <div
-        class="left resizer"
-        ref="leftResizer"
-        @mousedown="horizontalResizeMouseDown($event, 'left')"
-      ></div>
+      <div class="left resizer" ref="leftResizer" @mousedown="horizontalResizeMouseDown($event, 'left')"></div>
       <dock-component ref="left" name="left"></dock-component>
     </div>
     <div class="right-sidebar" v-show="visible.right">
-      <div
-        class="right resizer"
-        ref="rightResizer"
-        @mousedown="horizontalResizeMouseDown($event, 'right')"
-      ></div>
+      <div class="right resizer" ref="rightResizer" @mousedown="horizontalResizeMouseDown($event, 'right')"></div>
       <dock-component ref="right" name="right"></dock-component>
     </div>
     <div ref="mapSection" class="map">
       <map-component></map-component>
     </div>
     <div class="footer" v-show="visible.footer">
-      <div
-        class="bottom resizer"
-        ref="bottomtResizer"
-        @mousedown="horizontalResizeMouseDown($event, 'bottom')"
-      ></div>
+      <div class="bottom resizer" ref="bottomtResizer" @mousedown="horizontalResizeMouseDown($event, 'bottom')"></div>
       <dock-component ref="bottom" name="bottom"></dock-component>
     </div>
   </div>
@@ -106,12 +89,18 @@ export default {
     });
 
     this.app.registerCommand('layout:hideDock', this.hide);
+    this.app.registerCommand('layout:showDock', this.show);
   },
   methods: {
     hide(key) {
       console.log('hide', key);
       if (key == 'map') return;
       this.visible[key] = false;
+      this.resize();
+    },
+    show(key) {
+      console.log('show', key);
+      this.visible[key] = true;
       this.resize();
     },
     resize() {
@@ -193,7 +182,7 @@ export default {
   grid-template-columns: 320px auto 320px;
 }
 
-.container > div {
+.container>div {
   border: 1px solid #e8e8e8;
 }
 

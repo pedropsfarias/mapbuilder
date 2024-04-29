@@ -38,22 +38,22 @@ export default {
     };
   },
   mounted() {
+    this.app.registerDock(this.name, this);
     this.app.emitter.on('layout:resize', this.setTabSize);
   },
   methods: {
     openWidget(config) {
-      //   name: 'MeasureComponent',
-      //   title: 'Measure Component',
-      //   component: markRaw(defineAsyncComponent(() => import('@/components/map/MeasureComponent.vue')))
-
+      this.app.run('layout:showDock', this.name);
       const item = {
         title: config.title,
-        component: markRaw(defineAsyncComponent(() => import('@/components/' + config.name)))
+        component: markRaw(defineAsyncComponent(() => import(/* @vite-ignore */ '../' + config.component)))
       };
-
       this.items.push(item);
+      setTimeout(() => {
+        this.activeIndex = this.items.length - 1;
+        this.setTabSize();
+      }, 100);
 
-      
     },
     close(index) {
       this.items.splice(index, 1);
