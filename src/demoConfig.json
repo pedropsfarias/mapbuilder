@@ -17,6 +17,15 @@
       "placement": "left",
       "icon": "pi pi-circle",
       "toolbar": "inline"
+    },
+    {
+      "name": "measure2",
+      "title": "Measures",
+      "component": "map/MeasureComponent.vue",
+      "type": "widget",
+      "placement": "ribbon",
+      "icon": "pi pi-map",
+      "toolbar": "ribbon"
     }
   ]
 }

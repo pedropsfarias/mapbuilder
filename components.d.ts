@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Button: typeof import('primevue/button')['default']
+    copy: typeof import('./src/components/layout/RibbonGroupComponent copy.vue')['default']
     DockComponent: typeof import('./src/components/layout/DockComponent.vue')['default']
     Fieldset: typeof import('primevue/fieldset')['default']
     InlineToolbarComponent: typeof import('./src/components/layout/InlineToolbarComponent.vue')['default']
@@ -19,6 +20,7 @@ declare module 'vue' {
     MeasureComponent: typeof import('./src/components/map/MeasureComponent.vue')['default']
     MultiSelect: typeof import('primevue/multiselect')['default']
     RibbonGroupComponent: typeof import('./src/components/layout/RibbonGroupComponent.vue')['default']
+    RibbonItemGroupComponent: typeof import('./src/components/layout/RibbonItemGroupComponent.vue')['default']
     RibbonToolbarComponent: typeof import('./src/components/layout/RibbonToolbarComponent.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

@@ -2,22 +2,40 @@
   <div id="map"></div>
 </template>
 
-<script lang="ts">
+<script>
+import { mapStores } from 'pinia';
+import appStatusStore from '@/stores/appStatusStore.ts';
 import maplibregl from 'maplibre-gl';
 export default {
   components: {},
   data() {
-    return {};
+    return {
+    };
   },
   mounted() {
-    setTimeout(() => {
-      const map = new maplibregl.Map({
+  },
+  methods: {
+    createMap() {
+      this.app.map = new maplibregl.Map({
         container: 'map', // container id
         style: 'style.json' // style URL
       });
-    }, 10);
+      this.appStatusStore.setMapIsDone(true);
+    }
   },
-  methods: {}
+  computed: {
+    ...mapStores(appStatusStore)
+  }, watch: {
+    appStatusStore: {
+      handler: function (val) {
+        if (val.layoutIsDone) {
+          this.createMap();
+        }
+      },
+      deep: true
+    }
+
+  }
 };
 </script>
 

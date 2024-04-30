@@ -1,5 +1,6 @@
 import demoConfig from '../demoConfig.json';
 import mitt from 'mitt';
+import appStatusStore from '@/stores/appStatusStore';
 
 class AppController {
   config: any;
@@ -8,6 +9,8 @@ class AppController {
   toolbars: any;
   emitter: any;
   docks: any;
+  map: any;
+  statusStore: any = appStatusStore();
 
   constructor() {
     this._loadConfig();
@@ -16,12 +19,19 @@ class AppController {
     this.toolbars = {};
     this.docks = {};
 
-    setTimeout(() => {
-      this._createControls();
-    }, 10);
+    this.statusStore.$subscribe((mutation: any, state: any) => {
+      console.log('App status changed:', state); // "App status changed: { _mapIsDone: true, _layoutIsDone: true }"
+      if (state._mapIsDone && state._layoutIsDone) {
+        this._createControls();
+      }
+    });
 
     const emitter = mitt();
     this.emitter = emitter;
+  }
+
+  addMap(map: any) {
+    this.map = map;
   }
 
   registerToolbar(toolbarName: any, toolbar: any) {
