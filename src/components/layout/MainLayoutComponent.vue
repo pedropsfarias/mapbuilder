@@ -26,7 +26,7 @@
 
 <script>
 import { mapStores } from 'pinia';
-import appStatusStore from '@/stores/appStatusStore.ts';
+import appStatusStore from '@/stores/appStatusStore.js';
 
 import MapComponent from '@/components/MapComponent.vue';
 import DockComponent from '@/components/layout/DockComponent.vue';

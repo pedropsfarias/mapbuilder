@@ -4,14 +4,14 @@
 
 <script>
 import { mapStores } from 'pinia';
-import appStatusStore from '@/stores/appStatusStore.ts';
+import appStatusStore from '@/stores/appStatusStore.js';
 import maplibregl from 'maplibre-gl';
 export default {
   components: {},
   data() {
     return {};
   },
-  mounted() {},
+  mounted() { },
   methods: {
     createMap() {
       let map = new maplibregl.Map({
