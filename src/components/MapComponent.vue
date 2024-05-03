@@ -5,7 +5,7 @@
 <script>
 import { mapStores } from 'pinia';
 import appStatusStore from '@/stores/appStatusStore.js';
-import maplibregl from 'maplibre-gl';
+import MapSingleton from '@/classes/MapSingleton.js';
 export default {
   components: {},
   data() {
@@ -14,19 +14,17 @@ export default {
   mounted() { },
   methods: {
     createMap() {
-      let map = new maplibregl.Map({
-        container: 'map', // container id
-        style: 'style.json' // style URL
-      });
 
-      this.app.map = map;
+      console.log('createMap');
 
-      window.map = map;
+      MapSingleton.getInstance().initializeMap({ options: { zoom: 14, center: [-49.644602, -27.210800] } });
+
       this.appStatusStore.setMapIsDone(true);
+
     }
   },
   computed: {
-    ...mapStores(appStatusStore)
+    ...mapStores(appStatusStore),
   },
   watch: {
     appStatusStore: {

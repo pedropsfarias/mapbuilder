@@ -1,25 +1,13 @@
-//import maplibregl from 'maplibre-gl';
+import MapSingleton from '../MapSingleton.js'
 
 class Measure {
-  // public map: any;
+  constructor() {
+    let map = MapSingleton.getInstance().getMap()
 
-  constructor(map) {
-    this.map = map;
+    map.on('mousemove', (e) => {
+      console.log('Mouse move :', e.lngLat)
+    })
   }
-
-  init() {
-    console.log('Measure tool initialized', this);
-
-    setTimeout(() => {
-      this.map.on('mousemove', (e) => {
-        console.log('move', e);
-      });
-    }, 1000);
-
-
-  }
-
-
 }
 
-export default Measure;
+export default Measure
