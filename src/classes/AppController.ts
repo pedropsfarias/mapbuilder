@@ -1,15 +1,16 @@
 import demoConfig from '../demoConfig.json';
 import mitt from 'mitt';
 import appStatusStore from '@/stores/appStatusStore';
+import Measure from '@/classes/map/Measure';
 
 class AppController {
+  private _map: any;
   config: any;
   controls: any;
   commands: any;
   toolbars: any;
   emitter: any;
   docks: any;
-  map: any;
   statusStore: any = appStatusStore();
 
   constructor() {
@@ -30,8 +31,12 @@ class AppController {
     this.emitter = emitter;
   }
 
-  addMap(map: any) {
-    this.map = map;
+  public get map(): any {
+    return this._map;
+  }
+
+  public set map(value: any) {
+    this._map = value;
   }
 
   registerToolbar(toolbarName: any, toolbar: any) {

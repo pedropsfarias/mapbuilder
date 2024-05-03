@@ -8,9 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Button: typeof import('primevue/button')['default']
-    copy: typeof import('./src/components/layout/RibbonGroupComponent copy.vue')['default']
     DockComponent: typeof import('./src/components/layout/DockComponent.vue')['default']
-    Fieldset: typeof import('primevue/fieldset')['default']
     InlineToolbarComponent: typeof import('./src/components/layout/InlineToolbarComponent.vue')['default']
     InputText: typeof import('primevue/inputtext')['default']
     LayerSwitcherComponent: typeof import('./src/components/map/LayerSwitcherComponent.vue')['default']
@@ -28,6 +26,5 @@ declare module 'vue' {
     TabPanel: typeof import('primevue/tabpanel')['default']
     TabView: typeof import('primevue/tabview')['default']
     Toolbar: typeof import('primevue/toolbar')['default']
-    ToolbarComponent: typeof import('./src/components/layout/ToolbarComponent.vue')['default']
   }
 }

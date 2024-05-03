@@ -1,8 +1,11 @@
 <template>
-  <div :style="`
+  <div
+    :style="`
     width: ${width};
     height: ${height};
-  `" class="group">
+  `"
+    class="group"
+  >
     <div class="group-content">
       <slot></slot>
     </div>
@@ -11,8 +14,6 @@
 </template>
 
 <script>
-import { h } from 'vue';
-
 export default {
   name: 'RibbonGroupComponent',
   props: {
@@ -28,7 +29,7 @@ export default {
       type: String,
       default: '100%'
     }
-  },
+  }
 };
 </script>
 
@@ -59,6 +60,5 @@ export default {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows: 33.33% 33.33% 33.33%;
-
 }
 </style>

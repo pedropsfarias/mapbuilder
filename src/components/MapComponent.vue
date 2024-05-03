@@ -9,23 +9,26 @@ import maplibregl from 'maplibre-gl';
 export default {
   components: {},
   data() {
-    return {
-    };
+    return {};
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     createMap() {
-      this.app.map = new maplibregl.Map({
+      let map = new maplibregl.Map({
         container: 'map', // container id
         style: 'style.json' // style URL
       });
+
+      this.app.map = map;
+
+      window.map = map;
       this.appStatusStore.setMapIsDone(true);
     }
   },
   computed: {
     ...mapStores(appStatusStore)
-  }, watch: {
+  },
+  watch: {
     appStatusStore: {
       handler: function (val) {
         if (val.layoutIsDone) {
@@ -34,7 +37,6 @@ export default {
       },
       deep: true
     }
-
   }
 };
 </script>
