@@ -1,12 +1,12 @@
 import MapSingleton from '../MapSingleton.js'
+import Interaction from './Interaction.js'
 
 class Measure {
   constructor() {
     let map = MapSingleton.getInstance().getMap()
 
-    map.on('mousemove', (e) => {
-      console.log('Mouse move :', e.lngLat)
-    })
+    let interaction = new Interaction()
+    interaction.getPoint()
   }
 }
 
