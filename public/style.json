@@ -594,7 +594,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "#e9ac77",
+        "line-color": "#e0e0e0",
         "line-opacity": 1,
         "line-width": {
           "base": 1.2,
@@ -618,7 +618,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "#e9ac77",
+        "line-color": "#e0e0e0",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -644,7 +644,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#e9ac77",
+        "line-color": "#e0e0e0",
         "line-dasharray": [0.5, 0.25],
         "line-width": {
           "base": 1.2,
@@ -1057,7 +1057,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "#e9ac77",
+        "line-color": "#e0e0e0",
         "line-opacity": 1,
         "line-width": {
           "base": 1.2,
@@ -1090,7 +1090,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#e9ac77",
+        "line-color": "#e0e0e0",
         "line-opacity": 1,
         "line-width": {
           "base": 1.2,
@@ -1158,7 +1158,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#e9ac77",
+        "line-color": "#e0e0e0",
         "line-opacity": 1,
         "line-width": {
           "base": 1.2,
@@ -1185,7 +1185,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#e9ac77",
+        "line-color": "#e0e0e0",
         "line-opacity": {
           "stops": [
             [7, 0],
@@ -1219,7 +1219,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#e9ac77",
+        "line-color": "#e0e0e0",
         "line-opacity": {
           "stops": [
             [5, 0],
@@ -1253,7 +1253,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#e9ac77",
+        "line-color": "#e0e0e0",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -1344,7 +1344,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#fea",
+        "line-color": "#f0f0f0",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -1405,7 +1405,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#fea",
+        "line-color": "#f0f0f0",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -1435,7 +1435,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#fea",
+        "line-color": "#f0f0f0",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -1465,7 +1465,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#fea",
+        "line-color": "#f0f0f0",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -1690,7 +1690,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "#e9ac77",
+        "line-color": "#e0e0e0",
         "line-opacity": 1,
         "line-width": {
           "base": 1.2,
@@ -1720,7 +1720,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "#e9ac77",
+        "line-color": "#e0e0e0",
         "line-opacity": 1,
         "line-width": {
           "base": 1.2,
@@ -1746,7 +1746,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "#e9ac77",
+        "line-color": "#e0e0e0",
         "line-opacity": 1,
         "line-width": {
           "base": 1.2,
@@ -1795,7 +1795,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "#e9ac77",
+        "line-color": "#e0e0e0",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -1898,7 +1898,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "#fea",
+        "line-color": "#f0f0f0",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -1923,7 +1923,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "#fea",
+        "line-color": "#f0f0f0",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -1947,7 +1947,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "#fea",
+        "line-color": "#f0f0f0",
         "line-width": {
           "base": 1.2,
           "stops": [
