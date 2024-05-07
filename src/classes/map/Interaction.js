@@ -143,7 +143,7 @@ class Interaction {
    * @async
    * @returns {Promise}
    */
-  _watchMouseClick() {
+  _watchSingleMouseClick() {
     return new Promise((resolve) => {
       this.map.once('click', (e) => {
         this.mousePoint = point([e.lngLat.lng, e.lngLat.lat]);
@@ -153,6 +153,31 @@ class Interaction {
         resolve(clickPoint);
       });
     });
+  }
+
+  _watchMultiMouseClick(type = "LineString") {
+
+    //TODO: Implement multi click event
+
+    this.map.on('click', (e) => {
+      console.log("click", e);
+      // this.mousePoint = point([e.lngLat.lng, e.lngLat.lat]);
+      // const clickPoint = this.snapedPoint || this.mousePoint;
+      // this.map.off('mousemove', this._mouseMoveFunction);
+      // this.map.getSource('__interaction').setData(this._getEmptyDataSource());
+    });
+
+    return new Promise((resolve) => {
+      this.map.on('contextmenu', (e) => {
+        e.preventDefault();
+        console.log("contextmenu", e);
+        // this.mousePoint = point([e.lngLat.lng, e.lngLat.lat]);
+        // const clickPoint = this.snapedPoint || this.mousePoint;
+        // this.map.off('mousemove', this._mouseMoveFunction);
+        // this.map.getSource('__interaction').setData(this._getEmptyDataSource());
+      });
+    });
+
   }
 
   /**
@@ -179,8 +204,15 @@ class Interaction {
   async getPoint(snap = true) {
     this.snapEnabled = snap;
     this._watchMouseMove();
-    const point = await this._watchMouseClick();
+    const point = await this._watchSingleMouseClick();
     return point;
+  }
+
+  async getLineString(snap = true) {
+    this.snapEnabled = snap;
+    this._watchMouseMove();
+
+    this._watchMultiMouseClick("LineString");
   }
 }
 
