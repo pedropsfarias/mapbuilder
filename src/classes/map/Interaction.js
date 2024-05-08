@@ -1,5 +1,14 @@
 import MapSingleton from '../MapSingleton';
-import { distance, point, nearestPointOnLine, pointToLineDistance, segmentEach, coordAll, lineString, lineToPolygon } from '@turf/turf'
+import {
+  distance,
+  point,
+  nearestPointOnLine,
+  pointToLineDistance,
+  segmentEach,
+  coordAll,
+  lineString,
+  lineToPolygon
+} from '@turf/turf';
 
 class Interaction {
   constructor(snap = true, tolerance = 3, minZoom = 16) {
@@ -293,29 +302,24 @@ class Interaction {
 
   /**
    * Get point from map from mouse click
-   *
-   * @param {Boolean} snap - Snap to nearest point
    * @memberof Interaction
    * @returns {Object} Point
    * @async
    */
-  async getPoint(snap = true) {
-    this.snapEnabled = snap;
+  async getPoint() {
     this._watchMouseMove();
     const point = await this._watchSingleMouseClick();
     return point;
   }
 
-  async getLineString(snap = true) {
-    this.snapEnabled = snap;
+  async getLineString() {
     this._watchMouseMove();
     const points = await this._watchMultiMouseClick("LineString");
     console.log("points", points);
     return points;
   }
 
-  async getPolygon(snap = true) {
-    this.snapEnabled = snap;
+  async getPolygon() {
     this._watchMouseMove();
     const points = await this._watchMultiMouseClick("Polygon");
     console.log("points", points);
