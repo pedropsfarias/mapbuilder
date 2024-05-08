@@ -4,7 +4,7 @@ class Measure {
   constructor() {
 
     let interaction = new Interaction()
-    interaction.getLineString()
+    interaction.getPolygon()
   }
 }
 
