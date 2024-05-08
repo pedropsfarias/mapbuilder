@@ -187,6 +187,7 @@ class Interaction {
    * @returns {void}
    */
   _watchMouseMove() {
+    this.map.getCanvas().style.cursor = 'crosshair';
     this._mouseMoveFunction = (e) => this._mouseMoveEventHandler(e);
     this.map.on('mousemove', this._mouseMoveFunction);
   }
@@ -205,6 +206,7 @@ class Interaction {
         const clickPoint = this.snapedPoint || this.mousePoint;
         this.map.off('mousemove', this._mouseMoveFunction);
         this.map.getSource('__interactionSnap').setData(this._getEmptyDataSource());
+        this.map.getCanvas().style.cursor = 'unset';
         resolve(clickPoint);
       });
     });
@@ -274,7 +276,7 @@ class Interaction {
     this.map.on('click', clickFnc);
     this.map.on('mousemove', mouseMoveFnc);
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       this.map.once('contextmenu', (e) => {
         e.preventDefault();
         this.map.off('mousemove', this._mouseMoveFunction);
@@ -282,7 +284,27 @@ class Interaction {
         this.map.off('click', clickFnc);
         this.map.getSource('__interactionSnap').setData(this._getEmptyDataSource());
         this.map.getSource('__interactionDraw').setData(this._getEmptyDataSource());
-        resolve(points);
+        this.map.getCanvas().style.cursor = 'unset';
+
+        const lineStringCoords = coordAll({
+          'type': 'FeatureCollection',
+          'features': points
+        });
+
+        const drawLine = type == "LineString" && points.length > 1;
+        const drawAsLine = type == "Polygon" && points.length > 1;
+
+        if (drawLine || drawAsLine) {
+          resolve(lineString(lineStringCoords));
+          return;
+        }
+
+        if (type == "Polygon" && points.length >= 3) {
+          resolve(lineToPolygon(lineString(lineStringCoords)));
+          return;
+        }
+
+        reject();
       });
     });
   }
