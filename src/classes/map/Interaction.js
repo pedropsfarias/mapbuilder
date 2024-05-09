@@ -291,10 +291,7 @@ class Interaction {
           'features': points
         });
 
-        const drawLine = type == "LineString" && points.length > 1;
-        const drawAsLine = type == "Polygon" && points.length > 1;
-
-        if (drawLine || drawAsLine) {
+        if (type == "LineString" && points.length > 1) {
           resolve(lineString(lineStringCoords));
           return;
         }

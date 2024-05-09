@@ -1,6 +1,6 @@
 import Interaction from './Interaction.js';
 import MapSingleton from '../MapSingleton.js';
-import { featureEach, segmentEach, length } from '@turf/turf';
+import { featureEach, segmentEach, length, area } from '@turf/turf';
 
 class Measure {
   constructor() {
@@ -13,6 +13,16 @@ class Measure {
     this.map.addSource('__measureDraw', {
       'type': 'geojson',
       'data': this._getEmptyDataSource()
+    });
+
+    this.map.addLayer({
+      'id': '__measureDrawPolygon',
+      'type': 'fill',
+      'source': '__measureDraw',
+      'paint': {
+        'fill-color': '#000',
+        'fill-opacity': 0.1
+      },
     });
 
     this.map.addLayer({
@@ -37,7 +47,7 @@ class Measure {
 
     //label 
     this.map.addLayer({
-      'id': '__measureDrawLabel',
+      'id': '__measureDrawCoordsLabel',
       'type': 'symbol',
       'source': '__measureDraw',
       'layout': {
@@ -47,6 +57,50 @@ class Measure {
         "text-offset": [0.2, 0.2]
       },
       'filter': ['==', 'measureType', 'coords']
+    });
+
+    this.map.addLayer({
+      'id': '__measureDrawDistanceLabel',
+      'type': 'symbol',
+      'source': '__measureDraw',
+      'layout': {
+        "text-font": ["Noto Sans Bold"],
+        'text-field': ['get', 'label'],
+        "symbol-placement": "line-center",
+        "text-size": 12,
+        "text-justify": "center",
+        "text-allow-overlap": true,
+        "text-ignore-placement": true
+      },
+      "paint": {
+        "text-color": "#000",
+        "text-halo-color": "#FFF",
+        "text-halo-width": 2,
+        "text-halo-blur": 0.5
+      },
+      'filter': ['==', 'measureType', 'distance']
+    });
+
+    this.map.addLayer({
+      'id': '__measureDrawAreaLabel',
+      'type': 'symbol',
+      'source': '__measureDraw',
+      'layout': {
+        "text-font": ["Noto Sans Bold"],
+        'text-field': ['get', 'label'],
+        "symbol-placement": "point",
+        "text-size": 12,
+        "text-justify": "center",
+        "text-allow-overlap": true,
+        "text-ignore-placement": true
+      },
+      "paint": {
+        "text-color": "#000",
+        "text-halo-color": "#FFF",
+        "text-halo-width": 2,
+        "text-halo-blur": 0.5
+      },
+      'filter': ['==', 'measureType', 'area']
     });
   }
 
@@ -106,48 +160,71 @@ class Measure {
     console.log(this.map.getSource('__measureDraw')._data);
   }
 
-  _getDistance(feature) {
-    const featureLength = length(feature);
-    feature.properties = {
-      'label': `${(featureLength * 1000.0).toFixed(2)} m`,
-      'measureType': 'distance'
-    };
-    return feature;
-  }
-
-  _measureDistances(features) {
-    const featuresDist = [];
-    segmentEach(features, (currentSegment) => {
-      featuresDist.push(this._getDistance(currentSegment));
+  _getDistance(featureCollection) {
+    const features = [];
+    segmentEach(featureCollection, (currentSegment) => {
+      const featureLength = length(currentSegment);
+      currentSegment.properties = {
+        'label': `${(featureLength * 1000.0).toFixed(2)} m`,
+        'measureType': 'distance'
+      };
+      features.push(currentSegment);
     });
     return {
       'type': 'FeatureCollection',
-      'features': featuresDist
+      'features': features
     };
-
   }
+
+  _getArea(featureCollection) {
+    const features = [];
+    featureEach(featureCollection, (currentFeature) => {
+      const featureArea = area(currentFeature);
+      currentFeature.properties = {
+        'label': `${(featureArea / 1000000.0).toFixed(2)} km²`,
+        'measureType': 'area'
+      };
+      features.push(currentFeature);
+    });
+    return {
+      'type': 'FeatureCollection',
+      'features': features
+    };
+  }
+  // _measureDistances(features) {
+  //   const featuresDist = [];
+  //   segmentEach(features, (currentSegment) => {
+  //     featuresDist.push(this._getDistance(currentSegment));
+  //   });
+  //   return {
+  //     'type': 'FeatureCollection',
+  //     'features': featuresDist
+  //   };
+  // }
 
   async getCoordinates() {
     let feature = await this.interaction.getPoint();
     let coords = feature.geometry.coordinates;
     let formattedCoords = this._gd2dms(coords);
-
     feature.properties = {
       'label': formattedCoords,
       'measureType': 'coords'
     };
-
     this._updateSourceData(feature);
-
     return feature;
   }
 
   async getDistance() {
     let feature = await this.interaction.getLineString();
     let features = this._getDistance(feature);
-
     this._updateSourceData(features);
+    return feature;
+  }
 
+  async getArea() {
+    let feature = await this.interaction.getPolygon();
+    let features = this._getArea(feature);
+    this._updateSourceData(features);
     return feature;
   }
 

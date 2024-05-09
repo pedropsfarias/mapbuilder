@@ -26,6 +26,7 @@
 
     <RibbonItemGroupComponent rows="1" cols="2">
       <Button
+        @click="getArea"
         label="Áreas"
         icon="pi pi-bookmark"
         severity="secondary"
@@ -70,6 +71,9 @@ export default {
     },
     getDistance() {
       console.log(this.measure.getDistance())
+    },
+    getArea() {
+      console.log(this.measure.getArea())
     }
   }
 }
