@@ -4,7 +4,7 @@
       <Button
         @click="getCoordinates"
         label="Pontos"
-        icon="pi pi-bookmark"
+        icon="fg-multipoint"
         severity="secondary"
         outlined
         aria-label="Bookmark"
@@ -16,7 +16,7 @@
       <Button
         @click="getDistance"
         label="Distância"
-        icon="pi pi-bookmark"
+        icon="fg-polyline-pt"
         severity="secondary"
         outlined
         aria-label="Bookmark"
@@ -28,7 +28,7 @@
       <Button
         @click="getArea"
         label="Áreas"
-        icon="pi pi-bookmark"
+        icon="fg-polygon-pt"
         severity="secondary"
         outlined
         aria-label="Bookmark"
@@ -38,8 +38,9 @@
 
     <RibbonItemGroupComponent rows="1" cols="2">
       <Button
-        label="Ângulos"
-        icon="pi pi-bookmark"
+        @click="getAzimuth"
+        label="Azimute"
+        icon="fg-azimuth"
         severity="secondary"
         outlined
         aria-label="Bookmark"
@@ -74,6 +75,9 @@ export default {
     },
     getArea() {
       console.log(this.measure.getArea())
+    },
+    getAzimuth() {
+      console.log(this.measure.getAzimuth())
     }
   }
 }

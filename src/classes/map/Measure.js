@@ -1,6 +1,6 @@
 import Interaction from './Interaction.js';
 import MapSingleton from '../MapSingleton.js';
-import { featureEach, segmentEach, length, area } from '@turf/turf';
+import { featureEach, segmentEach, length, area, rhumbBearing, point } from '@turf/turf';
 
 class Measure {
   constructor() {
@@ -82,6 +82,28 @@ class Measure {
     });
 
     this.map.addLayer({
+      'id': '__measureDrawAzimuthLabel',
+      'type': 'symbol',
+      'source': '__measureDraw',
+      'layout': {
+        "text-font": ["Noto Sans Bold"],
+        'text-field': ['get', 'label'],
+        "symbol-placement": "line-center",
+        "text-size": 12,
+        "text-justify": "center",
+        "text-allow-overlap": true,
+        "text-ignore-placement": true
+      },
+      "paint": {
+        "text-color": "#000",
+        "text-halo-color": "#FFF",
+        "text-halo-width": 2,
+        "text-halo-blur": 0.5
+      },
+      'filter': ['==', 'measureType', 'azimuth']
+    });
+
+    this.map.addLayer({
       'id': '__measureDrawAreaLabel',
       'type': 'symbol',
       'source': '__measureDraw',
@@ -144,7 +166,7 @@ class Measure {
     let data = this.map.getSource('__measureDraw')._data;
     let features = [];
 
-    segmentEach(data, (currentFeature) => {
+    featureEach(data, (currentFeature) => {
       features.push(currentFeature);
     });
 
@@ -191,16 +213,26 @@ class Measure {
       'features': features
     };
   }
-  // _measureDistances(features) {
-  //   const featuresDist = [];
-  //   segmentEach(features, (currentSegment) => {
-  //     featuresDist.push(this._getDistance(currentSegment));
-  //   });
-  //   return {
-  //     'type': 'FeatureCollection',
-  //     'features': featuresDist
-  //   };
-  // }
+
+  _getAzimuth(featureCollection) {
+    const features = [];
+    segmentEach(featureCollection, (currentSegment) => {
+      const coords = currentSegment.geometry.coordinates;
+      const start = point(coords[0]);
+      const end = point(coords[1]);
+      const azimuth = rhumbBearing(start, end);
+      currentSegment.properties = {
+        'label': `${azimuth.toFixed(2)}°`,
+        'measureType': 'azimuth'
+      };
+      features.push(currentSegment);
+    });
+    return {
+      'type': 'FeatureCollection',
+      'features': features
+    };
+
+  }
 
   async getCoordinates() {
     let feature = await this.interaction.getPoint();
@@ -228,6 +260,12 @@ class Measure {
     return feature;
   }
 
+  async getAzimuth() {
+    let feature = await this.interaction.getLineString();
+    let features = this._getAzimuth(feature);
+    this._updateSourceData(features);
+    return feature;
+  }
 }
 
 export default Measure

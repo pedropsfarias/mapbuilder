@@ -286,6 +286,7 @@ class Interaction {
         this.map.getSource('__interactionDraw').setData(this._getEmptyDataSource());
         this.map.getCanvas().style.cursor = 'unset';
 
+        points.pop();
         const lineStringCoords = coordAll({
           'type': 'FeatureCollection',
           'features': points
