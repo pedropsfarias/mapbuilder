@@ -30,7 +30,7 @@ export default {
       default: '100%'
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -60,5 +60,6 @@ export default {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows: 33.33% 33.33% 33.33%;
+  padding: 0 0.25rem;
 }
 </style>
