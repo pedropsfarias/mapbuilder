@@ -1,10 +1,8 @@
 <template>
-  <div
-    :style="`
+  <div :style="`
     grid-column: span ${cols};
     grid-row: span ${rows};
-  `"
-  >
+  `">
     <div :class="{ 'group-item': !hasTitle, 'group-item-with-title': hasTitle }">
       <div class="group-item-title">{{ title }}</div>
       <slot></slot>
@@ -43,7 +41,7 @@ export default {
 <style scoped>
 .group-item {
   position: relative;
-  padding: 0.5rem 0.25rem;
+  padding: 0.4rem 0.25rem;
 }
 
 .group-item-with-title {
@@ -59,5 +57,11 @@ export default {
   background: #fff;
   padding: 0 0.2rem;
   color: #64748b;
+}
+</style>
+
+<style>
+.group-item button {
+  height: 2rem !important;
 }
 </style>

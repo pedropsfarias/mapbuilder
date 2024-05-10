@@ -11,118 +11,118 @@ class Measure {
 
   _createInternalLayers() {
     this.map.addSource('__measureDraw', {
-      'type': 'geojson',
-      'data': this._getEmptyDataSource()
+      type: 'geojson',
+      data: this._getEmptyDataSource()
     });
 
     this.map.addLayer({
-      'id': '__measureDrawPolygon',
-      'type': 'fill',
-      'source': '__measureDraw',
-      'paint': {
+      id: '__measureDrawPolygon',
+      type: 'fill',
+      source: '__measureDraw',
+      paint: {
         'fill-color': '#000',
         'fill-opacity': 0.1
-      },
+      }
     });
 
     this.map.addLayer({
-      'id': '__measureDrawLine',
-      'type': 'line',
-      'source': '__measureDraw',
-      'paint': {
+      id: '__measureDrawLine',
+      type: 'line',
+      source: '__measureDraw',
+      paint: {
         'line-color': '#555',
         'line-width': 2
-      },
+      }
     });
 
     this.map.addLayer({
-      'id': '__measureDrawPoint',
-      'type': 'circle',
-      'source': '__measureDraw',
-      'paint': {
+      id: '__measureDrawPoint',
+      type: 'circle',
+      source: '__measureDraw',
+      paint: {
         'circle-radius': 3,
-        'circle-color': '#000',
-      },
+        'circle-color': '#000'
+      }
     });
 
-    //label 
+    //label
     this.map.addLayer({
-      'id': '__measureDrawCoordsLabel',
-      'type': 'symbol',
-      'source': '__measureDraw',
-      'layout': {
+      id: '__measureDrawCoordsLabel',
+      type: 'symbol',
+      source: '__measureDraw',
+      layout: {
         'text-field': ['get', 'label'],
         'text-size': 12,
-        "text-anchor": "top-left",
-        "text-offset": [0.2, 0.2]
+        'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
+        'text-radial-offset': 0.5
       },
-      'filter': ['==', 'measureType', 'coords']
+      filter: ['==', 'measureType', 'coords']
     });
 
     this.map.addLayer({
-      'id': '__measureDrawDistanceLabel',
-      'type': 'symbol',
-      'source': '__measureDraw',
-      'layout': {
-        "text-font": ["Noto Sans Bold"],
+      id: '__measureDrawDistanceLabel',
+      type: 'symbol',
+      source: '__measureDraw',
+      layout: {
+        'text-font': ['Noto Sans Bold'],
         'text-field': ['get', 'label'],
-        "symbol-placement": "line-center",
-        "text-size": 12,
-        "text-justify": "center",
-        "text-allow-overlap": true,
-        "text-ignore-placement": true
+        'symbol-placement': 'line-center',
+        'text-size': 12,
+        'text-justify': 'center',
+        'text-allow-overlap': true,
+        'text-ignore-placement': true
       },
-      "paint": {
-        "text-color": "#000",
-        "text-halo-color": "#FFF",
-        "text-halo-width": 2,
-        "text-halo-blur": 0.5
+      paint: {
+        'text-color': '#000',
+        'text-halo-color': '#FFF',
+        'text-halo-width': 2,
+        'text-halo-blur': 0.5
       },
-      'filter': ['==', 'measureType', 'distance']
+      filter: ['==', 'measureType', 'distance']
     });
 
     this.map.addLayer({
-      'id': '__measureDrawAzimuthLabel',
-      'type': 'symbol',
-      'source': '__measureDraw',
-      'layout': {
-        "text-font": ["Noto Sans Bold"],
+      id: '__measureDrawAzimuthLabel',
+      type: 'symbol',
+      source: '__measureDraw',
+      layout: {
+        'text-font': ['Noto Sans Bold'],
         'text-field': ['get', 'label'],
-        "symbol-placement": "line-center",
-        "text-size": 12,
-        "text-justify": "center",
-        "text-allow-overlap": true,
-        "text-ignore-placement": true
+        'symbol-placement': 'line-center',
+        'text-size': 12,
+        'text-justify': 'center',
+        'text-allow-overlap': true,
+        'text-ignore-placement': true
       },
-      "paint": {
-        "text-color": "#000",
-        "text-halo-color": "#FFF",
-        "text-halo-width": 2,
-        "text-halo-blur": 0.5
+      paint: {
+        'text-color': '#000',
+        'text-halo-color': '#FFF',
+        'text-halo-width': 2,
+        'text-halo-blur': 0.5
       },
-      'filter': ['==', 'measureType', 'azimuth']
+      filter: ['==', 'measureType', 'azimuth']
     });
 
     this.map.addLayer({
-      'id': '__measureDrawAreaLabel',
-      'type': 'symbol',
-      'source': '__measureDraw',
-      'layout': {
-        "text-font": ["Noto Sans Bold"],
+      id: '__measureDrawAreaLabel',
+      type: 'symbol',
+      source: '__measureDraw',
+      layout: {
+        'text-font': ['Noto Sans Bold'],
         'text-field': ['get', 'label'],
-        "symbol-placement": "point",
-        "text-size": 12,
-        "text-justify": "center",
-        "text-allow-overlap": true,
-        "text-ignore-placement": true
+        'symbol-placement': 'point',
+        'text-size': 12,
+        'text-justify': 'center',
+        'text-allow-overlap': true,
+        'text-ignore-placement': true
       },
-      "paint": {
-        "text-color": "#000",
-        "text-halo-color": "#FFF",
-        "text-halo-width": 2,
-        "text-halo-blur": 0.5
+      paint: {
+        'text-color': '#000',
+        'text-halo-color': '#FFF',
+        'text-halo-width': 2,
+        'text-halo-blur': 0.5
       },
-      'filter': ['==', 'measureType', 'area']
+      filter: ['==', 'measureType', 'area']
     });
   }
 
@@ -134,13 +134,12 @@ class Measure {
    */
   _getEmptyDataSource() {
     return {
-      'type': 'FeatureCollection',
-      'features': []
-    }
+      type: 'FeatureCollection',
+      features: []
+    };
   }
 
   _gd2dms(coords) {
-
     function toDMS(value) {
       const degrees = Math.floor(Math.abs(value));
       const minutesFloat = (Math.abs(value) - degrees) * 60;
@@ -162,7 +161,6 @@ class Measure {
   }
 
   _updateSourceData(inputFeatures) {
-
     let data = this.map.getSource('__measureDraw')._data;
     let features = [];
 
@@ -175,8 +173,8 @@ class Measure {
     });
 
     this.map.getSource('__measureDraw').setData({
-      'type': 'FeatureCollection',
-      'features': features
+      type: 'FeatureCollection',
+      features: features
     });
 
     console.log(this.map.getSource('__measureDraw')._data);
@@ -187,14 +185,32 @@ class Measure {
     segmentEach(featureCollection, (currentSegment) => {
       const featureLength = length(currentSegment);
       currentSegment.properties = {
-        'label': `${(featureLength * 1000.0).toFixed(2)} m`,
-        'measureType': 'distance'
+        label: `${(featureLength * 1000.0).toFixed(2)} m`,
+        value: featureLength,
+        measureType: 'distance'
       };
       features.push(currentSegment);
     });
+    let sum = features.reduce((acc, current) => {
+      return acc + current.properties.value;
+    }, 0);
+    const sumFeatures = [];
+    const collection = {
+      type: 'FeatureCollection',
+      features: features
+    };
+    segmentEach(collection, (currentSegment) => {
+      currentSegment.properties = {
+        label: currentSegment.properties.label,
+        value: currentSegment.properties.value,
+        measureType: currentSegment.properties.measureType,
+        total: `${(sum * 1000.0).toFixed(2)} m`
+      };
+      sumFeatures.push(currentSegment);
+    });
     return {
-      'type': 'FeatureCollection',
-      'features': features
+      type: 'FeatureCollection',
+      features: sumFeatures
     };
   }
 
@@ -203,14 +219,15 @@ class Measure {
     featureEach(featureCollection, (currentFeature) => {
       const featureArea = area(currentFeature);
       currentFeature.properties = {
-        'label': `${(featureArea / 1000000.0).toFixed(2)} km²`,
-        'measureType': 'area'
+        label: `${(featureArea / 1000000.0).toFixed(2)} km²`,
+        value: featureArea,
+        measureType: 'area'
       };
       features.push(currentFeature);
     });
     return {
-      'type': 'FeatureCollection',
-      'features': features
+      type: 'FeatureCollection',
+      features: features
     };
   }
 
@@ -222,16 +239,16 @@ class Measure {
       const end = point(coords[1]);
       const azimuth = rhumbBearing(start, end);
       currentSegment.properties = {
-        'label': `${azimuth.toFixed(2)}°`,
-        'measureType': 'azimuth'
+        label: `Az ${azimuth.toFixed(2)}°`,
+        value: azimuth,
+        measureType: 'azimuth'
       };
       features.push(currentSegment);
     });
     return {
-      'type': 'FeatureCollection',
-      'features': features
+      type: 'FeatureCollection',
+      features: features
     };
-
   }
 
   async getCoordinates() {
@@ -239,8 +256,9 @@ class Measure {
     let coords = feature.geometry.coordinates;
     let formattedCoords = this._gd2dms(coords);
     feature.properties = {
-      'label': formattedCoords,
-      'measureType': 'coords'
+      label: formattedCoords,
+      value: coords,
+      measureType: 'coords'
     };
     this._updateSourceData(feature);
     return feature;
@@ -250,22 +268,26 @@ class Measure {
     let feature = await this.interaction.getLineString();
     let features = this._getDistance(feature);
     this._updateSourceData(features);
-    return feature;
+    return features;
   }
 
   async getArea() {
     let feature = await this.interaction.getPolygon();
     let features = this._getArea(feature);
     this._updateSourceData(features);
-    return feature;
+    return features;
   }
 
   async getAzimuth() {
     let feature = await this.interaction.getLineString();
     let features = this._getAzimuth(feature);
     this._updateSourceData(features);
-    return feature;
+    return features;
+  }
+
+  clear() {
+    this.map.getSource('__measureDraw').setData(this._getEmptyDataSource());
   }
 }
 
-export default Measure
+export default Measure;
