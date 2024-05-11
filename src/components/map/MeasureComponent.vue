@@ -5,10 +5,11 @@
         @click="getCoordinates"
         label="Pontos"
         icon="fg-lg fg fg-multipoint"
-        severity="secondary"
-        outlined
+        :severity="activeTool == 'coords' ? 'primary' : 'secondary'"
+        :outlined="activeTool != 'coords'"
         aria-label="Bookmark"
         class="w-100"
+        :disabled="activeTool"
       />
     </RibbonItemGroupComponent>
 
@@ -17,10 +18,11 @@
         @click="getDistance"
         label="Distância"
         icon="fg-lg fg fg-polyline-pt"
-        severity="secondary"
-        outlined
+        :severity="activeTool == 'distance' ? 'primary' : 'secondary'"
+        :outlined="activeTool != 'distance'"
         aria-label="Bookmark"
         class="w-100"
+        :disabled="activeTool"
       />
     </RibbonItemGroupComponent>
 
@@ -29,10 +31,11 @@
         @click="getArea"
         label="Áreas"
         icon="fg-lg fg fg-polygon-pt"
-        severity="secondary"
-        outlined
+        :severity="activeTool == 'area' ? 'primary' : 'secondary'"
+        :outlined="activeTool != 'area'"
         aria-label="Bookmark"
         class="w-100"
+        :disabled="activeTool"
       />
     </RibbonItemGroupComponent>
 
@@ -41,17 +44,18 @@
         @click="getAzimuth"
         label="Azimute"
         icon="fg-lg fg fg-azimuth"
-        severity="secondary"
-        outlined
+        :severity="activeTool == 'azimuth' ? 'primary' : 'secondary'"
+        :outlined="activeTool != 'azimuth'"
         aria-label="Bookmark"
         class="w-100"
+        :disabled="activeTool"
       />
     </RibbonItemGroupComponent>
 
     <RibbonItemGroupComponent rows="1" cols="1">
       <Button
         @click="clear"
-        v-tooltip.bottom="'Apagar'"
+        v-tooltip.bottom="'Limpar'"
         icon="pi pi-eraser"
         class="w-100"
         severity="secondary"
@@ -77,11 +81,23 @@
   </RibbonGroupComponent>
 
   <Dialog v-model:visible="resumeVisible" header="Medidas" :style="{ width: '25rem' }">
+    <div v-if="resume.length == 0">Nenhuma medida realizada</div>
     <div v-for="(r, i) in resume" :key="i">
-      <h5>{{ r.title }}</h5>
-      <p>{{ r.items }}</p>
-      <p v-if="r.total">{{ r.total }}</p>
+      <div>
+        <b>{{ r.title }}</b> <br />
+        {{ r.items }}<br />
+        <div v-if="r.total">Total: {{ r.total }}</div>
+      </div>
+      <Divider />
     </div>
+    <Button
+      v-if="resume.length > 0"
+      @click="clear"
+      label="Limpar"
+      icon="pi pi-eraser"
+      severity="secondary"
+      outlined
+    />
   </Dialog>
 </template>
 
@@ -95,29 +111,42 @@ export default {
       resumeVisible: false,
       measure: new Measure(),
       measures: [],
-      resume: []
+      resume: [],
+      activeTool: null
     };
   },
   mounted() {},
   methods: {
     async getCoordinates() {
+      this.activeTool = 'coords';
       this.measures.push(await this.measure.getCoordinates());
-      console.log(this.measures);
+      this.buildResume();
+      this.activeTool = null;
     },
     async getDistance() {
+      this.activeTool = 'distance';
       this.measures.push(await this.measure.getDistance());
+      this.buildResume();
+      this.activeTool = null;
     },
     async getArea() {
+      this.activeTool = 'area';
       this.measures.push(await this.measure.getArea());
+      this.buildResume();
+      this.activeTool = null;
     },
     async getAzimuth() {
+      this.activeTool = 'azimuth';
       this.measures.push(await this.measure.getAzimuth());
+      this.buildResume();
+      this.activeTool = null;
     },
     clear() {
       this.measure.clear();
       this.measures = [];
+      this.resume = [];
     },
-    showResume() {
+    buildResume() {
       this.resume = [];
       for (let i = 0; i < this.measures.length; i++) {
         if (this.measures[i].type == 'FeatureCollection') {
@@ -137,7 +166,8 @@ export default {
           });
         }
       }
-
+    },
+    showResume() {
       this.resumeVisible = true;
     },
     _getTitle(measure) {
