@@ -2,59 +2,34 @@
   "version": 8,
   "name": "OSM Bright",
   "metadata": {
-    "mapbox:type": "template",
-    "mapbox:groups": {
-      "1444849364238.8171": {
+    "groups": [
+      {
+        "id": "base",
+        "name": "Basemap",
         "collapsed": false,
-        "name": "Buildings"
-      },
-      "1444849354174.1904": {
-        "collapsed": true,
-        "name": "Tunnels"
-      },
-      "1444849388993.3071": {
-        "collapsed": false,
-        "name": "Land"
-      },
-      "1444849242106.713": {
-        "collapsed": false,
-        "name": "Places"
-      },
-      "1444849382550.77": {
-        "collapsed": false,
-        "name": "Water"
-      },
-      "1444849345966.4436": {
-        "collapsed": false,
-        "name": "Roads"
-      },
-      "1444849334699.1902": {
-        "collapsed": true,
-        "name": "Bridges"
+        "children": [
+          {
+            "id": "osm",
+            "name": "OpenStreetMap",
+            "collapsed": true,
+            "children": [
+              { "id": "buildings", "collapsed": false, "name": "Buildings" },
+              { "id": "tunnels", "collapsed": true, "name": "Tunnels" },
+              { "id": "land", "collapsed": false, "name": "Land" },
+              { "id": "places", "collapsed": false, "name": "Places" },
+              { "id": "water", "collapsed": false, "name": "Water" },
+              { "id": "roads", "collapsed": false, "name": "Roads" },
+              { "id": "bridges", "collapsed": true, "name": "Bridges" }
+            ]
+          }
+        ]
       }
-    },
-    "mapbox:autocomposite": false,
-    "openmaptiles:version": "3.x",
-    "openmaptiles:mapbox:owner": "openmaptiles",
-    "openmaptiles:mapbox:source:url": "mapbox://openmaptiles.4qljc88t"
-  },
-  "groups": {
-    "base": {
-      "title": "Mapas Base",
-      "collapsed": false,
-      "children": {
-        "osm": {
-          "title": "OpenStreetMap",
-          "collapsed": true
-        }
-      }
-    }
+    ]
   },
   "center": [-48.9628813, -26.2634146],
   "zoom": 11,
   "sources": {
     "openmaptiles": {
-      "group": "base:osm",
       "type": "vector",
       "tiles": [
         "https://a.geomattic.com/data/v3/{z}/{x}/{y}.pbf",
@@ -68,25 +43,18 @@
     {
       "id": "background",
       "title": "Background",
-      "group": "base:osm",
       "type": "background",
-      "paint": {
-        "background-color": "#f8f4f0"
-      }
+      "paint": { "background-color": "#f8f4f0" },
+      "metadata": { "group": "land", "name": "Fundo básico do mapa", "enabled": true }
     },
     {
       "id": "landcover-glacier",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849388993.3071"
-      },
+      "metadata": { "group": "land", "name": "Área coberta por geleiras", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "landcover",
       "filter": ["==", "subclass", "glacier"],
-      "layout": {
-        "visibility": "visible"
-      },
+      "layout": { "visibility": "visible" },
       "paint": {
         "fill-color": "#fff",
         "fill-opacity": {
@@ -100,11 +68,8 @@
     },
     {
       "id": "landuse-residential",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849388993.3071"
-      },
+      "metadata": { "group": "land", "name": "Área residencial", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "landuse",
       "filter": ["==", "class", "residential"],
@@ -120,39 +85,26 @@
     },
     {
       "id": "landuse-commercial",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849388993.3071"
-      },
+      "metadata": { "group": "land", "name": "Área comercial", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "landuse",
       "filter": ["all", ["==", "$type", "Polygon"], ["==", "class", "commercial"]],
-      "paint": {
-        "fill-color": "hsla(0, 60%, 87%, 0.23)"
-      }
+      "paint": { "fill-color": "hsla(0, 60%, 87%, 0.23)" }
     },
     {
       "id": "landuse-industrial",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849388993.3071"
-      },
+      "metadata": { "group": "land", "name": "Área industrial", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "landuse",
       "filter": ["all", ["==", "$type", "Polygon"], ["==", "class", "industrial"]],
-      "paint": {
-        "fill-color": "hsla(49, 100%, 88%, 0.34)"
-      }
+      "paint": { "fill-color": "hsla(49, 100%, 88%, 0.34)" }
     },
     {
       "id": "park",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849388993.3071"
-      },
+      "metadata": { "group": "land", "name": "Parque", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "park",
       "filter": ["==", "$type", "Polygon"],
@@ -169,11 +121,8 @@
     },
     {
       "id": "park-outline",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849388993.3071"
-      },
+      "metadata": { "group": "land", "name": "Contorno de um parque", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "park",
       "filter": ["==", "$type", "Polygon"],
@@ -191,67 +140,44 @@
     },
     {
       "id": "landuse-cemetery",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849388993.3071"
-      },
+      "metadata": { "group": "land", "name": "Cemitério", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "landuse",
       "filter": ["==", "class", "cemetery"],
-      "paint": {
-        "fill-color": "#e0e4dd"
-      }
+      "paint": { "fill-color": "#e0e4dd" }
     },
     {
       "id": "landuse-hospital",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849388993.3071"
-      },
+      "metadata": { "group": "land", "name": "Hospital", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "landuse",
       "filter": ["==", "class", "hospital"],
-      "paint": {
-        "fill-color": "#fde"
-      }
+      "paint": { "fill-color": "#fde" }
     },
     {
       "id": "landuse-school",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849388993.3071"
-      },
+      "metadata": { "group": "land", "name": "Escola", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "landuse",
       "filter": ["==", "class", "school"],
-      "paint": {
-        "fill-color": "#f0e8f8"
-      }
+      "paint": { "fill-color": "#f0e8f8" }
     },
     {
       "id": "landuse-railway",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849388993.3071"
-      },
+      "metadata": { "group": "land", "name": "Área de ferrovia", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "landuse",
       "filter": ["==", "class", "railway"],
-      "paint": {
-        "fill-color": "hsla(30, 19%, 90%, 0.4)"
-      }
+      "paint": { "fill-color": "hsla(30, 19%, 90%, 0.4)" }
     },
     {
       "id": "landcover-wood",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849388993.3071"
-      },
+      "metadata": { "group": "land", "name": "Área florestal", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "landcover",
       "filter": ["==", "class", "wood"],
@@ -270,44 +196,29 @@
     },
     {
       "id": "landcover-grass",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849388993.3071"
-      },
+      "metadata": { "group": "land", "name": "Área de grama", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "landcover",
       "filter": ["==", "class", "grass"],
-      "paint": {
-        "fill-color": "#d8e8c8",
-        "fill-opacity": 1
-      }
+      "paint": { "fill-color": "#d8e8c8", "fill-opacity": 1 }
     },
     {
       "id": "landcover-grass-park",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849388993.3071"
-      },
+      "metadata": { "group": "land", "name": "Área de grama em parques", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "park",
       "filter": ["==", "class", "public_park"],
-      "paint": {
-        "fill-color": "#d8e8c8",
-        "fill-opacity": 0.8
-      }
+      "paint": { "fill-color": "#d8e8c8", "fill-opacity": 0.8 }
     },
     {
       "id": "waterway_tunnel",
       "filter": ["all", ["in", "class", "river", "stream", "canal"], ["==", "brunnel", "tunnel"]],
-      "group": "base:osm",
       "type": "line",
       "source": "openmaptiles",
       "source-layer": "waterway",
-      "layout": {
-        "line-cap": "round"
-      },
+      "layout": { "line-cap": "round" },
       "paint": {
         "line-color": "#a0c8f0",
         "line-width": {
@@ -319,21 +230,17 @@
         },
         "line-dasharray": [2, 4]
       },
-      "minzoom": 14
+      "minzoom": 14,
+      "metadata": { "group": "water", "name": "Túnel de via aquática", "enabled": true }
     },
     {
       "id": "waterway-other",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849382550.77"
-      },
+      "metadata": { "group": "water", "name": "Outras vias aquáticas", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "waterway",
       "filter": ["!in", "class", "canal", "river", "stream"],
-      "layout": {
-        "line-cap": "round"
-      },
+      "layout": { "line-cap": "round" },
       "paint": {
         "line-color": "#a0c8f0",
         "line-width": {
@@ -347,17 +254,12 @@
     },
     {
       "id": "waterway-stream-canal",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849382550.77"
-      },
+      "metadata": { "group": "water", "name": "Corrente ou canal", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "waterway",
       "filter": ["all", ["in", "class", "canal", "stream"], ["!=", "brunnel", "tunnel"]],
-      "layout": {
-        "line-cap": "round"
-      },
+      "layout": { "line-cap": "round" },
       "paint": {
         "line-color": "#a0c8f0",
         "line-width": {
@@ -371,17 +273,12 @@
     },
     {
       "id": "waterway-river",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849382550.77"
-      },
+      "metadata": { "group": "water", "name": "Rio", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "waterway",
       "filter": ["all", ["==", "class", "river"], ["!=", "brunnel", "tunnel"]],
-      "layout": {
-        "line-cap": "round"
-      },
+      "layout": { "line-cap": "round" },
       "paint": {
         "line-color": "#a0c8f0",
         "line-width": {
@@ -395,18 +292,13 @@
     },
     {
       "id": "water-offset",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849382550.77"
-      },
+      "metadata": { "group": "water", "name": "Deslocamento de água", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "water",
       "maxzoom": 8,
       "filter": ["==", "$type", "Polygon"],
-      "layout": {
-        "visibility": "visible"
-      },
+      "layout": { "visibility": "visible" },
       "paint": {
         "fill-opacity": 1,
         "fill-color": "#a0c8f0",
@@ -421,50 +313,30 @@
     },
     {
       "id": "water",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849382550.77"
-      },
+      "metadata": { "group": "water", "name": "Água", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "water",
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "fill-color": "hsl(210, 67%, 85%)"
-      }
+      "layout": { "visibility": "visible" },
+      "paint": { "fill-color": "hsl(210, 67%, 85%)" }
     },
     {
       "id": "water-pattern",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849382550.77"
-      },
+      "metadata": { "group": "water", "name": "Padrão de água", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "water",
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "fill-translate": [0, 2.5],
-        "fill-pattern": "wave"
-      }
+      "layout": { "visibility": "visible" },
+      "paint": { "fill-translate": [0, 2.5], "fill-pattern": "wave" }
     },
     {
       "id": "landcover-ice-shelf",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849382550.77"
-      },
+      "metadata": { "group": "water", "name": "Prateleira de gelo", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "landcover",
       "filter": ["==", "subclass", "ice_shelf"],
-      "layout": {
-        "visibility": "visible"
-      },
+      "layout": { "visibility": "visible" },
       "paint": {
         "fill-color": "#fff",
         "fill-opacity": {
@@ -478,29 +350,18 @@
     },
     {
       "id": "landcover-sand",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849382550.77"
-      },
+      "metadata": { "group": "water", "name": "Área de areia", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "landcover",
       "filter": ["all", ["==", "class", "sand"]],
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "fill-color": "rgba(245, 238, 188, 1)",
-        "fill-opacity": 1
-      }
+      "layout": { "visibility": "visible" },
+      "paint": { "fill-color": "rgba(245, 238, 188, 1)", "fill-opacity": 1 }
     },
     {
       "id": "building",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849364238.8171"
-      },
+      "metadata": { "group": "buildings", "name": "Edifício", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "building",
       "paint": {
@@ -516,16 +377,11 @@
     },
     {
       "id": "building-top",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849364238.8171"
-      },
+      "metadata": { "group": "buildings", "name": "Topo do edifício", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "building",
-      "layout": {
-        "visibility": "visible"
-      },
+      "layout": { "visibility": "visible" },
       "paint": {
         "fill-translate": {
           "base": 1,
@@ -547,17 +403,16 @@
     },
     {
       "id": "tunnel-service-track-casing",
-      "group": "base:osm",
       "type": "line",
       "metadata": {
-        "mapbox:group": "1444849354174.1904"
+        "group": "tunnels",
+        "name": "Cobertura de túnel para serviços",
+        "enabled": true
       },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "tunnel"], ["in", "class", "service", "track"]],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#cfcdca",
         "line-dasharray": [0.5, 0.25],
@@ -573,17 +428,12 @@
     },
     {
       "id": "tunnel-minor-casing",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849354174.1904"
-      },
+      "metadata": { "group": "tunnels", "name": "Cobertura de túnel menor", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "tunnel"], ["==", "class", "minor"]],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#cfcdca",
         "line-opacity": {
@@ -605,17 +455,16 @@
     },
     {
       "id": "tunnel-secondary-tertiary-casing",
-      "group": "base:osm",
       "type": "line",
       "metadata": {
-        "mapbox:group": "1444849354174.1904"
+        "group": "tunnels",
+        "name": "Cobertura de túnel secundário e terciário",
+        "enabled": true
       },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "tunnel"], ["in", "class", "secondary", "tertiary"]],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#e0e0e0",
         "line-opacity": 1,
@@ -630,17 +479,12 @@
     },
     {
       "id": "tunnel-trunk-primary-casing",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849354174.1904"
-      },
+      "metadata": { "group": "tunnels", "name": "Cobertura de túnel principal", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "tunnel"], ["in", "class", "primary", "trunk"]],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#e0e0e0",
         "line-width": {
@@ -656,18 +500,12 @@
     },
     {
       "id": "tunnel-motorway-casing",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849354174.1904"
-      },
+      "metadata": { "group": "tunnels", "name": "Cobertura de túnel de rodovia", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "tunnel"], ["==", "class", "motorway"]],
-      "layout": {
-        "line-join": "round",
-        "visibility": "visible"
-      },
+      "layout": { "line-join": "round", "visibility": "visible" },
       "paint": {
         "line-color": "#e0e0e0",
         "line-dasharray": [0.5, 0.25],
@@ -684,11 +522,8 @@
     },
     {
       "id": "tunnel-path",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849354174.1904"
-      },
+      "metadata": { "group": "tunnels", "name": "Caminho do túnel", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": [
@@ -710,17 +545,12 @@
     },
     {
       "id": "tunnel-service-track",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849354174.1904"
-      },
+      "metadata": { "group": "tunnels", "name": "Trilha de serviço do túnel", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "tunnel"], ["in", "class", "service", "track"]],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#fff",
         "line-width": {
@@ -735,17 +565,12 @@
     },
     {
       "id": "tunnel-minor",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849354174.1904"
-      },
+      "metadata": { "group": "tunnels", "name": "Túnel menor", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "tunnel"], ["==", "class", "minor_road"]],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#fff",
         "line-opacity": 1,
@@ -761,17 +586,12 @@
     },
     {
       "id": "tunnel-secondary-tertiary",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849354174.1904"
-      },
+      "metadata": { "group": "tunnels", "name": "Túnel secundário e terciário", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "tunnel"], ["in", "class", "secondary", "tertiary"]],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#fff4c6",
         "line-width": {
@@ -786,17 +606,12 @@
     },
     {
       "id": "tunnel-trunk-primary",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849354174.1904"
-      },
+      "metadata": { "group": "tunnels", "name": "Túnel principal", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "tunnel"], ["in", "class", "primary", "trunk"]],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#fff4c6",
         "line-width": {
@@ -811,18 +626,12 @@
     },
     {
       "id": "tunnel-motorway",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849354174.1904"
-      },
+      "metadata": { "group": "tunnels", "name": "Túnel de rodovia", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "tunnel"], ["==", "class", "motorway"]],
-      "layout": {
-        "line-join": "round",
-        "visibility": "visible"
-      },
+      "layout": { "line-join": "round", "visibility": "visible" },
       "paint": {
         "line-color": "#ffdaa6",
         "line-width": {
@@ -837,11 +646,8 @@
     },
     {
       "id": "tunnel-railway",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849354174.1904"
-      },
+      "metadata": { "group": "tunnels", "name": "Túnel ferroviário", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "tunnel"], ["==", "class", "rail"]],
@@ -860,37 +666,27 @@
     },
     {
       "id": "ferry",
-      "group": "base:osm",
       "type": "line",
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["in", "class", "ferry"]],
-      "layout": {
-        "line-join": "round",
-        "visibility": "visible"
-      },
+      "layout": { "line-join": "round", "visibility": "visible" },
       "paint": {
         "line-color": "rgba(108, 159, 182, 1)",
         "line-width": 1.1,
         "line-dasharray": [2, 2]
-      }
+      },
+      "metadata": { "group": "roads", "name": "Balsa", "enabled": true }
     },
     {
       "id": "aeroway-taxiway-casing",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Cobertura de pista de táxi aéreo", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "aeroway",
       "minzoom": 12,
       "filter": ["all", ["in", "class", "taxiway"]],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round",
-        "visibility": "visible"
-      },
+      "layout": { "line-cap": "round", "line-join": "round", "visibility": "visible" },
       "paint": {
         "line-color": "rgba(153, 153, 153, 1)",
         "line-width": {
@@ -905,20 +701,13 @@
     },
     {
       "id": "aeroway-runway-casing",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Cobertura de pista de decolagem", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "aeroway",
       "minzoom": 12,
       "filter": ["all", ["in", "class", "runway"]],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round",
-        "visibility": "visible"
-      },
+      "layout": { "line-cap": "round", "line-join": "round", "visibility": "visible" },
       "paint": {
         "line-color": "rgba(153, 153, 153, 1)",
         "line-width": {
@@ -933,18 +722,13 @@
     },
     {
       "id": "aeroway-area",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Área aérea", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "aeroway",
       "minzoom": 4,
       "filter": ["all", ["==", "$type", "Polygon"], ["in", "class", "runway", "taxiway"]],
-      "layout": {
-        "visibility": "visible"
-      },
+      "layout": { "visibility": "visible" },
       "paint": {
         "fill-opacity": {
           "base": 1,
@@ -958,20 +742,13 @@
     },
     {
       "id": "aeroway-taxiway",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Pista de táxi aéreo", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "aeroway",
       "minzoom": 4,
       "filter": ["all", ["in", "class", "taxiway"], ["==", "$type", "LineString"]],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round",
-        "visibility": "visible"
-      },
+      "layout": { "line-cap": "round", "line-join": "round", "visibility": "visible" },
       "paint": {
         "line-color": "rgba(255, 255, 255, 1)",
         "line-width": {
@@ -992,20 +769,13 @@
     },
     {
       "id": "aeroway-runway",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Pista de decolagem", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "aeroway",
       "minzoom": 4,
       "filter": ["all", ["in", "class", "runway"], ["==", "$type", "LineString"]],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round",
-        "visibility": "visible"
-      },
+      "layout": { "line-cap": "round", "line-join": "round", "visibility": "visible" },
       "paint": {
         "line-color": "rgba(255, 255, 255, 1)",
         "line-width": {
@@ -1026,32 +796,22 @@
     },
     {
       "id": "road_area_pier",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {},
+      "metadata": { "group": "roads", "name": "Área de píer rodoviário", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "$type", "Polygon"], ["==", "class", "pier"]],
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "fill-color": "#f8f4f0",
-        "fill-antialias": true
-      }
+      "layout": { "visibility": "visible" },
+      "paint": { "fill-color": "#f8f4f0", "fill-antialias": true }
     },
     {
       "id": "road_pier",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {},
+      "metadata": { "group": "roads", "name": "Píer rodoviário", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "$type", "LineString"], ["in", "class", "pier"]],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round"
-      },
+      "layout": { "line-cap": "round", "line-join": "round" },
       "paint": {
         "line-color": "#f8f4f0",
         "line-width": {
@@ -1065,17 +825,12 @@
     },
     {
       "id": "highway-area",
-      "group": "base:osm",
       "type": "fill",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Área de rodovia", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "$type", "Polygon"], ["!in", "class", "pier"]],
-      "layout": {
-        "visibility": "visible"
-      },
+      "layout": { "visibility": "visible" },
       "paint": {
         "fill-color": "hsla(0, 0%, 89%, 0.56)",
         "fill-outline-color": "#cfcdca",
@@ -1085,19 +840,13 @@
     },
     {
       "id": "highway-motorway-link-casing",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Cobertura de ligação de rodovia", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "minzoom": 12,
       "filter": ["all", ["!in", "brunnel", "bridge", "tunnel"], ["==", "class", "motorway_link"]],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round"
-      },
+      "layout": { "line-cap": "round", "line-join": "round" },
       "paint": {
         "line-color": "#e0e0e0",
         "line-opacity": 1,
@@ -1114,11 +863,8 @@
     },
     {
       "id": "highway-link-casing",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Cobertura de ligação rodoviária", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "minzoom": 13,
@@ -1127,11 +873,7 @@
         ["!in", "brunnel", "bridge", "tunnel"],
         ["in", "class", "primary_link", "secondary_link", "tertiary_link", "trunk_link"]
       ],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round",
-        "visibility": "visible"
-      },
+      "layout": { "line-cap": "round", "line-join": "round", "visibility": "visible" },
       "paint": {
         "line-color": "#e0e0e0",
         "line-opacity": 1,
@@ -1148,11 +890,8 @@
     },
     {
       "id": "highway-minor-casing",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Cobertura de rodovia menor", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": [
@@ -1160,10 +899,7 @@
         ["==", "$type", "LineString"],
         ["all", ["!=", "brunnel", "tunnel"], ["in", "class", "minor", "service", "track"]]
       ],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round"
-      },
+      "layout": { "line-cap": "round", "line-join": "round" },
       "paint": {
         "line-color": "#cfcdca",
         "line-opacity": {
@@ -1185,10 +921,11 @@
     },
     {
       "id": "highway-secondary-tertiary-casing",
-      "group": "base:osm",
       "type": "line",
       "metadata": {
-        "mapbox:group": "1444849345966.4436"
+        "group": "roads",
+        "name": "Cobertura de rodovia secundária e terciária",
+        "enabled": true
       },
       "source": "openmaptiles",
       "source-layer": "transportation",
@@ -1197,11 +934,7 @@
         ["!in", "brunnel", "bridge", "tunnel"],
         ["in", "class", "secondary", "tertiary"]
       ],
-      "layout": {
-        "line-cap": "butt",
-        "line-join": "round",
-        "visibility": "visible"
-      },
+      "layout": { "line-cap": "butt", "line-join": "round", "visibility": "visible" },
       "paint": {
         "line-color": "#e0e0e0",
         "line-opacity": 1,
@@ -1216,20 +949,13 @@
     },
     {
       "id": "highway-primary-casing",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Cobertura de rodovia primária", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "minzoom": 5,
       "filter": ["all", ["!in", "brunnel", "bridge", "tunnel"], ["in", "class", "primary"]],
-      "layout": {
-        "line-cap": "butt",
-        "line-join": "round",
-        "visibility": "visible"
-      },
+      "layout": { "line-cap": "butt", "line-join": "round", "visibility": "visible" },
       "paint": {
         "line-color": "#e0e0e0",
         "line-opacity": {
@@ -1251,20 +977,13 @@
     },
     {
       "id": "highway-trunk-casing",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Cobertura de rodovia troncal", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "minzoom": 5,
       "filter": ["all", ["!in", "brunnel", "bridge", "tunnel"], ["in", "class", "trunk"]],
-      "layout": {
-        "line-cap": "butt",
-        "line-join": "round",
-        "visibility": "visible"
-      },
+      "layout": { "line-cap": "butt", "line-join": "round", "visibility": "visible" },
       "paint": {
         "line-color": "#e0e0e0",
         "line-opacity": {
@@ -1286,20 +1005,13 @@
     },
     {
       "id": "highway-motorway-casing",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Cobertura de rodovia", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "minzoom": 4,
       "filter": ["all", ["!in", "brunnel", "bridge", "tunnel"], ["==", "class", "motorway"]],
-      "layout": {
-        "line-cap": "butt",
-        "line-join": "round",
-        "visibility": "visible"
-      },
+      "layout": { "line-cap": "butt", "line-join": "round", "visibility": "visible" },
       "paint": {
         "line-color": "#e0e0e0",
         "line-width": {
@@ -1322,11 +1034,8 @@
     },
     {
       "id": "highway-path",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Caminho de rodovia", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": [
@@ -1348,19 +1057,13 @@
     },
     {
       "id": "highway-motorway-link",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Ligação de rodovia", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "minzoom": 12,
       "filter": ["all", ["!in", "brunnel", "bridge", "tunnel"], ["==", "class", "motorway_link"]],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round"
-      },
+      "layout": { "line-cap": "round", "line-join": "round" },
       "paint": {
         "line-color": "#fc8",
         "line-width": {
@@ -1376,11 +1079,8 @@
     },
     {
       "id": "highway-link",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Ligação rodoviária", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "minzoom": 13,
@@ -1389,11 +1089,7 @@
         ["!in", "brunnel", "bridge", "tunnel"],
         ["in", "class", "primary_link", "secondary_link", "tertiary_link", "trunk_link"]
       ],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round",
-        "visibility": "visible"
-      },
+      "layout": { "line-cap": "round", "line-join": "round", "visibility": "visible" },
       "paint": {
         "line-color": "#f0f0f0",
         "line-width": {
@@ -1409,11 +1105,8 @@
     },
     {
       "id": "highway-minor",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Rodovia menor", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": [
@@ -1421,10 +1114,7 @@
         ["==", "$type", "LineString"],
         ["all", ["!=", "brunnel", "tunnel"], ["in", "class", "minor", "service", "track"]]
       ],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round"
-      },
+      "layout": { "line-cap": "round", "line-join": "round" },
       "paint": {
         "line-color": "#fff",
         "line-opacity": 1,
@@ -1440,11 +1130,8 @@
     },
     {
       "id": "highway-secondary-tertiary",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Rodovia secundária e terciária", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": [
@@ -1452,11 +1139,7 @@
         ["!in", "brunnel", "bridge", "tunnel"],
         ["in", "class", "secondary", "tertiary"]
       ],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round",
-        "visibility": "visible"
-      },
+      "layout": { "line-cap": "round", "line-join": "round", "visibility": "visible" },
       "paint": {
         "line-color": "#f0f0f0",
         "line-width": {
@@ -1471,11 +1154,8 @@
     },
     {
       "id": "highway-primary",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Rodovia primária", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": [
@@ -1483,11 +1163,7 @@
         ["==", "$type", "LineString"],
         ["all", ["!in", "brunnel", "bridge", "tunnel"], ["in", "class", "primary"]]
       ],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round",
-        "visibility": "visible"
-      },
+      "layout": { "line-cap": "round", "line-join": "round", "visibility": "visible" },
       "paint": {
         "line-color": "#f0f0f0",
         "line-width": {
@@ -1502,11 +1178,8 @@
     },
     {
       "id": "highway-trunk",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Rodovia troncal", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": [
@@ -1514,11 +1187,7 @@
         ["==", "$type", "LineString"],
         ["all", ["!in", "brunnel", "bridge", "tunnel"], ["in", "class", "trunk"]]
       ],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round",
-        "visibility": "visible"
-      },
+      "layout": { "line-cap": "round", "line-join": "round", "visibility": "visible" },
       "paint": {
         "line-color": "#f0f0f0",
         "line-width": {
@@ -1533,11 +1202,8 @@
     },
     {
       "id": "highway-motorway",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Rodovia", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "minzoom": 5,
@@ -1546,11 +1212,7 @@
         ["==", "$type", "LineString"],
         ["all", ["!in", "brunnel", "bridge", "tunnel"], ["==", "class", "motorway"]]
       ],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round",
-        "visibility": "visible"
-      },
+      "layout": { "line-cap": "round", "line-join": "round", "visibility": "visible" },
       "paint": {
         "line-color": "#fc8",
         "line-width": {
@@ -1565,11 +1227,8 @@
     },
     {
       "id": "railway-transit",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Trânsito ferroviário", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": [
@@ -1577,9 +1236,7 @@
         ["==", "$type", "LineString"],
         ["all", ["==", "class", "transit"], ["!in", "brunnel", "tunnel"]]
       ],
-      "layout": {
-        "visibility": "visible"
-      },
+      "layout": { "visibility": "visible" },
       "paint": {
         "line-color": "hsla(0, 0%, 73%, 0.77)",
         "line-width": {
@@ -1593,11 +1250,8 @@
     },
     {
       "id": "railway-transit-hatching",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Traçado de trânsito ferroviário", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": [
@@ -1605,9 +1259,7 @@
         ["==", "$type", "LineString"],
         ["all", ["==", "class", "transit"], ["!in", "brunnel", "tunnel"]]
       ],
-      "layout": {
-        "visibility": "visible"
-      },
+      "layout": { "visibility": "visible" },
       "paint": {
         "line-color": "hsla(0, 0%, 73%, 0.68)",
         "line-dasharray": [0.2, 8],
@@ -1623,11 +1275,8 @@
     },
     {
       "id": "railway-service",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Serviço ferroviário", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": [
@@ -1648,11 +1297,8 @@
     },
     {
       "id": "railway-service-hatching",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Traçado de serviço ferroviário", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": [
@@ -1660,9 +1306,7 @@
         ["==", "$type", "LineString"],
         ["all", ["==", "class", "rail"], ["has", "service"]]
       ],
-      "layout": {
-        "visibility": "visible"
-      },
+      "layout": { "visibility": "visible" },
       "paint": {
         "line-color": "hsla(0, 0%, 73%, 0.68)",
         "line-dasharray": [0.2, 8],
@@ -1678,11 +1322,8 @@
     },
     {
       "id": "railway",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Ferrovia", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": [
@@ -1709,11 +1350,8 @@
     },
     {
       "id": "railway-hatching",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849345966.4436"
-      },
+      "metadata": { "group": "roads", "name": "Traçado ferroviário", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": [
@@ -1741,17 +1379,16 @@
     },
     {
       "id": "bridge-motorway-link-casing",
-      "group": "base:osm",
       "type": "line",
       "metadata": {
-        "mapbox:group": "1444849334699.1902"
+        "group": "bridges",
+        "name": "Cobertura de ligação de ponte de rodovia",
+        "enabled": true
       },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "bridge"], ["==", "class", "motorway_link"]],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#e0e0e0",
         "line-opacity": 1,
@@ -1768,11 +1405,8 @@
     },
     {
       "id": "bridge-link-casing",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849334699.1902"
-      },
+      "metadata": { "group": "bridges", "name": "Cobertura de ligação de ponte", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": [
@@ -1780,9 +1414,7 @@
         ["==", "brunnel", "bridge"],
         ["in", "class", "primary_link", "secondary_link", "tertiary_link", "trunk_link"]
       ],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#e0e0e0",
         "line-opacity": 1,
@@ -1799,17 +1431,16 @@
     },
     {
       "id": "bridge-secondary-tertiary-casing",
-      "group": "base:osm",
       "type": "line",
       "metadata": {
-        "mapbox:group": "1444849334699.1902"
+        "group": "bridges",
+        "name": "Cobertura de ponte secundária e terciária",
+        "enabled": true
       },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "bridge"], ["in", "class", "secondary", "tertiary"]],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#e0e0e0",
         "line-opacity": 1,
@@ -1824,17 +1455,12 @@
     },
     {
       "id": "bridge-trunk-primary-casing",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849334699.1902"
-      },
+      "metadata": { "group": "bridges", "name": "Cobertura de ponte principal", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "bridge"], ["in", "class", "primary", "trunk"]],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "hsl(28, 76%, 67%)",
         "line-width": {
@@ -1850,17 +1476,12 @@
     },
     {
       "id": "bridge-motorway-casing",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849334699.1902"
-      },
+      "metadata": { "group": "bridges", "name": "Cobertura de ponte de rodovia", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "bridge"], ["==", "class", "motorway"]],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#e0e0e0",
         "line-width": {
@@ -1876,11 +1497,8 @@
     },
     {
       "id": "bridge-path-casing",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849334699.1902"
-      },
+      "metadata": { "group": "bridges", "name": "Cobertura de caminho de ponte", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": [
@@ -1901,11 +1519,8 @@
     },
     {
       "id": "bridge-path",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849334699.1902"
-      },
+      "metadata": { "group": "bridges", "name": "Caminho de ponte", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": [
@@ -1927,17 +1542,12 @@
     },
     {
       "id": "bridge-motorway-link",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849334699.1902"
-      },
+      "metadata": { "group": "bridges", "name": "Ligação de ponte de rodovia", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "bridge"], ["==", "class", "motorway_link"]],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#fc8",
         "line-width": {
@@ -1953,11 +1563,8 @@
     },
     {
       "id": "bridge-link",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849334699.1902"
-      },
+      "metadata": { "group": "bridges", "name": "Ligação de ponte", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": [
@@ -1965,9 +1572,7 @@
         ["==", "brunnel", "bridge"],
         ["in", "class", "primary_link", "secondary_link", "tertiary_link", "trunk_link"]
       ],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#f0f0f0",
         "line-width": {
@@ -1983,17 +1588,12 @@
     },
     {
       "id": "bridge-secondary-tertiary",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849334699.1902"
-      },
+      "metadata": { "group": "bridges", "name": "Ponte secundária e terciária", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "bridge"], ["in", "class", "secondary", "tertiary"]],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#f0f0f0",
         "line-width": {
@@ -2008,17 +1608,12 @@
     },
     {
       "id": "bridge-trunk-primary",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849334699.1902"
-      },
+      "metadata": { "group": "bridges", "name": "Ponte principal", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "bridge"], ["in", "class", "primary", "trunk"]],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#f0f0f0",
         "line-width": {
@@ -2033,17 +1628,12 @@
     },
     {
       "id": "bridge-motorway",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849334699.1902"
-      },
+      "metadata": { "group": "bridges", "name": "Ponte de rodovia", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "bridge"], ["==", "class", "motorway"]],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#fc8",
         "line-width": {
@@ -2058,11 +1648,8 @@
     },
     {
       "id": "bridge-railway",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849334699.1902"
-      },
+      "metadata": { "group": "bridges", "name": "Ponte ferroviária", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "bridge"], ["==", "class", "rail"]],
@@ -2080,11 +1667,8 @@
     },
     {
       "id": "bridge-railway-hatching",
-      "group": "base:osm",
       "type": "line",
-      "metadata": {
-        "mapbox:group": "1444849334699.1902"
-      },
+      "metadata": { "group": "bridges", "name": "Traçado de ponte ferroviária", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "transportation",
       "filter": ["all", ["==", "brunnel", "bridge"], ["==", "class", "rail"]],
@@ -2103,16 +1687,12 @@
     },
     {
       "id": "cablecar",
-      "group": "base:osm",
       "type": "line",
       "source": "openmaptiles",
       "source-layer": "transportation",
       "minzoom": 13,
       "filter": ["==", "class", "cable_car"],
-      "layout": {
-        "visibility": "visible",
-        "line-cap": "round"
-      },
+      "layout": { "visibility": "visible", "line-cap": "round" },
       "paint": {
         "line-color": "hsl(0, 0%, 70%)",
         "line-width": {
@@ -2122,20 +1702,17 @@
             [19, 2.5]
           ]
         }
-      }
+      },
+      "metadata": { "name": "Teleférico", "enabled": true }
     },
     {
       "id": "cablecar-dash",
-      "group": "base:osm",
       "type": "line",
       "source": "openmaptiles",
       "source-layer": "transportation",
       "minzoom": 13,
       "filter": ["==", "class", "cable_car"],
-      "layout": {
-        "visibility": "visible",
-        "line-cap": "round"
-      },
+      "layout": { "visibility": "visible", "line-cap": "round" },
       "paint": {
         "line-color": "hsl(0, 0%, 70%)",
         "line-width": {
@@ -2146,18 +1723,16 @@
           ]
         },
         "line-dasharray": [2, 3]
-      }
+      },
+      "metadata": { "group": "roads", "name": "Traço de teleférico", "enabled": true }
     },
     {
       "id": "boundary-land-level-4",
-      "group": "base:osm",
       "type": "line",
       "source": "openmaptiles",
       "source-layer": "boundary",
       "filter": ["all", [">=", "admin_level", 4], ["<=", "admin_level", 8], ["!=", "maritime", 1]],
-      "layout": {
-        "line-join": "round"
-      },
+      "layout": { "line-join": "round" },
       "paint": {
         "line-color": "#9e9cab",
         "line-dasharray": [3, 1, 1, 1],
@@ -2169,19 +1744,16 @@
             [12, 3]
           ]
         }
-      }
+      },
+      "metadata": { "group": "roads", "name": "Limite de terra nível 4", "enabled": true }
     },
     {
       "id": "boundary-land-level-2",
-      "group": "base:osm",
       "type": "line",
       "source": "openmaptiles",
       "source-layer": "boundary",
       "filter": ["all", ["==", "admin_level", 2], ["!=", "maritime", 1], ["!=", "disputed", 1]],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round"
-      },
+      "layout": { "line-cap": "round", "line-join": "round" },
       "paint": {
         "line-color": "hsl(248, 7%, 66%)",
         "line-width": {
@@ -2193,19 +1765,16 @@
             [12, 8]
           ]
         }
-      }
+      },
+      "metadata": { "group": "roads", "name": "Limite de terra nível 2", "enabled": true }
     },
     {
       "id": "boundary-land-disputed",
-      "group": "base:osm",
       "type": "line",
       "source": "openmaptiles",
       "source-layer": "boundary",
       "filter": ["all", ["!=", "maritime", 1], ["==", "disputed", 1]],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round"
-      },
+      "layout": { "line-cap": "round", "line-join": "round" },
       "paint": {
         "line-color": "hsl(248, 7%, 70%)",
         "line-dasharray": [1, 3],
@@ -2218,19 +1787,16 @@
             [12, 8]
           ]
         }
-      }
+      },
+      "metadata": { "group": "roads", "name": "Limite de terra disputada", "enabled": true }
     },
     {
       "id": "boundary-water",
-      "group": "base:osm",
       "type": "line",
       "source": "openmaptiles",
       "source-layer": "boundary",
       "filter": ["all", ["in", "admin_level", 2, 4], ["==", "maritime", 1]],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round"
-      },
+      "layout": { "line-cap": "round", "line-join": "round" },
       "paint": {
         "line-color": "rgba(154, 189, 214, 1)",
         "line-width": {
@@ -2248,11 +1814,11 @@
             [10, 1]
           ]
         }
-      }
+      },
+      "metadata": { "group": "roads", "name": "Limite de água", "enabled": true }
     },
     {
       "id": "waterway-name",
-      "group": "base:osm",
       "type": "symbol",
       "source": "openmaptiles",
       "source-layer": "waterway",
@@ -2272,11 +1838,11 @@
         "text-color": "#74aee9",
         "text-halo-width": 1.5,
         "text-halo-color": "rgba(255,255,255,0.7)"
-      }
+      },
+      "metadata": { "group": "water", "name": "Nome da via aquática", "enabled": true }
     },
     {
       "id": "water-name-lakeline",
-      "group": "base:osm",
       "type": "symbol",
       "source": "openmaptiles",
       "source-layer": "water_name",
@@ -2295,11 +1861,11 @@
         "text-color": "#74aee9",
         "text-halo-width": 1.5,
         "text-halo-color": "rgba(255,255,255,0.7)"
-      }
+      },
+      "metadata": { "group": "water", "name": "Nome de lago", "enabled": true }
     },
     {
       "id": "water-name-ocean",
-      "group": "base:osm",
       "type": "symbol",
       "source": "openmaptiles",
       "source-layer": "water_name",
@@ -2318,11 +1884,11 @@
         "text-color": "#74aee9",
         "text-halo-width": 1.5,
         "text-halo-color": "rgba(255,255,255,0.7)"
-      }
+      },
+      "metadata": { "name": "Nome de oceano", "enabled": true }
     },
     {
       "id": "water-name-other",
-      "group": "base:osm",
       "type": "symbol",
       "source": "openmaptiles",
       "source-layer": "water_name",
@@ -2347,11 +1913,11 @@
         "text-color": "#74aee9",
         "text-halo-width": 1.5,
         "text-halo-color": "rgba(255,255,255,0.7)"
-      }
+      },
+      "metadata": { "group": "water", "name": "Outro nome de água", "enabled": true }
     },
     {
       "id": "road_oneway",
-      "group": "base:osm",
       "type": "symbol",
       "source": "openmaptiles",
       "source-layer": "transportation",
@@ -2375,13 +1941,11 @@
           ]
         }
       },
-      "paint": {
-        "icon-opacity": 0.5
-      }
+      "paint": { "icon-opacity": 0.5 },
+      "metadata": { "group": "water", "name": "Estrada de mão única", "enabled": true }
     },
     {
       "id": "road_oneway_opposite",
-      "group": "base:osm",
       "type": "symbol",
       "source": "openmaptiles",
       "source-layer": "transportation",
@@ -2405,13 +1969,11 @@
           ]
         }
       },
-      "paint": {
-        "icon-opacity": 0.5
-      }
+      "paint": { "icon-opacity": 0.5 },
+      "metadata": { "group": "water", "name": "Estrada de mão única oposta", "enabled": true }
     },
     {
       "id": "highway-name-path",
-      "group": "base:osm",
       "type": "symbol",
       "source": "openmaptiles",
       "source-layer": "transportation_name",
@@ -2434,11 +1996,11 @@
         "text-halo-color": "#f8f4f0",
         "text-color": "hsl(30, 23%, 62%)",
         "text-halo-width": 0.5
-      }
+      },
+      "metadata": { "group": "water", "name": "Nome de caminho de rodovia", "enabled": true }
     },
     {
       "id": "highway-name-minor",
-      "group": "base:osm",
       "type": "symbol",
       "source": "openmaptiles",
       "source-layer": "transportation_name",
@@ -2461,15 +2023,11 @@
         "symbol-placement": "line",
         "text-rotation-alignment": "map"
       },
-      "paint": {
-        "text-halo-blur": 0.5,
-        "text-color": "#765",
-        "text-halo-width": 1
-      }
+      "paint": { "text-halo-blur": 0.5, "text-color": "#765", "text-halo-width": 1 },
+      "metadata": { "group": "water", "name": "Nome de rodovia menor", "enabled": true }
     },
     {
       "id": "highway-name-major",
-      "group": "base:osm",
       "type": "symbol",
       "source": "openmaptiles",
       "source-layer": "transportation_name",
@@ -2488,15 +2046,11 @@
         "symbol-placement": "line",
         "text-rotation-alignment": "map"
       },
-      "paint": {
-        "text-halo-blur": 0.5,
-        "text-color": "#765",
-        "text-halo-width": 1
-      }
+      "paint": { "text-halo-blur": 0.5, "text-color": "#765", "text-halo-width": 1 },
+      "metadata": { "group": "water", "name": "Nome de rodovia principal", "enabled": true }
     },
     {
       "id": "highway-shield",
-      "group": "base:osm",
       "type": "symbol",
       "source": "openmaptiles",
       "source-layer": "transportation_name",
@@ -2524,11 +2078,11 @@
         "icon-size": 1,
         "text-field": "{ref}"
       },
-      "paint": {}
+      "paint": {},
+      "metadata": { "group": "water", "name": "Escudo de rodovia", "enabled": true }
     },
     {
       "id": "highway-shield-us-interstate",
-      "group": "base:osm",
       "type": "symbol",
       "source": "openmaptiles",
       "source-layer": "transportation_name",
@@ -2557,13 +2111,15 @@
         "icon-size": 1,
         "text-field": "{ref}"
       },
-      "paint": {
-        "text-color": "rgba(0, 0, 0, 1)"
+      "paint": { "text-color": "rgba(0, 0, 0, 1)" },
+      "metadata": {
+        "group": "water",
+        "name": "Escudo de rodovia interestadual dos EUA",
+        "enabled": true
       }
     },
     {
       "id": "highway-shield-us-other",
-      "group": "base:osm",
       "type": "symbol",
       "source": "openmaptiles",
       "source-layer": "transportation_name",
@@ -2591,17 +2147,13 @@
         "icon-size": 1,
         "text-field": "{ref}"
       },
-      "paint": {
-        "text-color": "rgba(0, 0, 0, 1)"
-      }
+      "paint": { "text-color": "rgba(0, 0, 0, 1)" },
+      "metadata": { "group": "water", "name": "Outro escudo de rodovia dos EUA", "enabled": true }
     },
     {
       "id": "park-label",
-      "group": "base:osm",
       "type": "symbol",
-      "metadata": {
-        "mapbox:group": "1444849242106.713"
-      },
+      "metadata": { "group": "places", "name": "Etiqueta de parque", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "park",
       "filter": ["all", ["==", "rank", 1], ["==", "$type", "Point"]],
@@ -2631,11 +2183,8 @@
     },
     {
       "id": "place-other",
-      "group": "base:osm",
       "type": "symbol",
-      "metadata": {
-        "mapbox:group": "1444849242106.713"
-      },
+      "metadata": { "group": "places", "name": "Outro lugar", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "place",
       "filter": ["!in", "class", "city", "town", "village", "country", "continent"],
@@ -2662,11 +2211,8 @@
     },
     {
       "id": "place-village",
-      "group": "base:osm",
       "type": "symbol",
-      "metadata": {
-        "mapbox:group": "1444849242106.713"
-      },
+      "metadata": { "group": "places", "name": "Vila", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "place",
       "filter": ["==", "class", "village"],
@@ -2691,11 +2237,8 @@
     },
     {
       "id": "place-town",
-      "group": "base:osm",
       "type": "symbol",
-      "metadata": {
-        "mapbox:group": "1444849242106.713"
-      },
+      "metadata": { "group": "places", "name": "Cidade pequena", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "place",
       "filter": ["==", "class", "town"],
@@ -2720,11 +2263,8 @@
     },
     {
       "id": "place-city",
-      "group": "base:osm",
       "type": "symbol",
-      "metadata": {
-        "mapbox:group": "1444849242106.713"
-      },
+      "metadata": { "group": "places", "name": "Cidade", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "place",
       "filter": ["all", ["!=", "capital", 2], ["==", "class", "city"]],
@@ -2749,11 +2289,8 @@
     },
     {
       "id": "place-city-capital",
-      "group": "base:osm",
       "type": "symbol",
-      "metadata": {
-        "mapbox:group": "1444849242106.713"
-      },
+      "metadata": { "group": "places", "name": "Capital da cidade", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "place",
       "filter": ["all", ["==", "capital", 2], ["==", "class", "city"]],
@@ -2782,11 +2319,8 @@
     },
     {
       "id": "place-country-other",
-      "group": "base:osm",
       "type": "symbol",
-      "metadata": {
-        "mapbox:group": "1444849242106.713"
-      },
+      "metadata": { "group": "places", "name": "Outro país", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "place",
       "filter": ["all", ["==", "class", "country"], [">=", "rank", 3], ["!has", "iso_a2"]],
@@ -2812,11 +2346,8 @@
     },
     {
       "id": "place-country-3",
-      "group": "base:osm",
       "type": "symbol",
-      "metadata": {
-        "mapbox:group": "1444849242106.713"
-      },
+      "metadata": { "group": "places", "name": "País nível 3", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "place",
       "filter": ["all", ["==", "class", "country"], [">=", "rank", 3], ["has", "iso_a2"]],
@@ -2842,11 +2373,8 @@
     },
     {
       "id": "place-country-2",
-      "group": "base:osm",
       "type": "symbol",
-      "metadata": {
-        "mapbox:group": "1444849242106.713"
-      },
+      "metadata": { "group": "places", "name": "País nível 2", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "place",
       "filter": ["all", ["==", "class", "country"], ["==", "rank", 2], ["has", "iso_a2"]],
@@ -2872,11 +2400,8 @@
     },
     {
       "id": "place-country-1",
-      "group": "base:osm",
       "type": "symbol",
-      "metadata": {
-        "mapbox:group": "1444849242106.713"
-      },
+      "metadata": { "group": "places", "name": "País nível 1", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "place",
       "filter": ["all", ["==", "class", "country"], ["==", "rank", 1], ["has", "iso_a2"]],
@@ -2902,11 +2427,8 @@
     },
     {
       "id": "place-continent",
-      "group": "base:osm",
       "type": "symbol",
-      "metadata": {
-        "mapbox:group": "1444849242106.713"
-      },
+      "metadata": { "group": "places", "name": "Continente", "enabled": true },
       "source": "openmaptiles",
       "source-layer": "place",
       "maxzoom": 1,
