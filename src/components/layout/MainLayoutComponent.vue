@@ -17,9 +17,8 @@
         ref="leftResizer"
         @mousedown="horizontalResizeMouseDown($event, 'left')"
       ></div>
-      <LayerSwitcherComponent></LayerSwitcherComponent>
 
-      <!-- <dock-component ref="left" name="left"></dock-component> -->
+      <dock-component ref="left" name="left"></dock-component>
     </div>
     <div class="right-sidebar" v-show="visible.right">
       <div
@@ -52,16 +51,13 @@ import DockComponent from '@/components/layout/DockComponent.vue';
 import MainMenuComponent from '@/components/layout/MainMenuComponent.vue';
 import RibbonToolbar from '@/components/layout/RibbonToolbarComponent.vue';
 
-import LayerSwitcherComponent from '../map/LayerSwitcherComponent.vue';
-
 export default {
   name: 'MainLayoutComponent',
   components: {
     MapComponent,
     DockComponent,
     MainMenuComponent,
-    RibbonToolbar,
-    LayerSwitcherComponent
+    RibbonToolbar
   },
   props: {
     showHeader: {
@@ -74,7 +70,7 @@ export default {
     },
     showLeftSidebar: {
       type: Boolean,
-      default: true
+      default: false
     },
     showRightSidebar: {
       type: Boolean,

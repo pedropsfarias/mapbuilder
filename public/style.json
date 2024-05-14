@@ -312,7 +312,7 @@
       }
     },
     {
-      "id": "water",
+      "id": "water-w",
       "type": "fill",
       "metadata": { "group": "water", "name": "Água", "enabled": true },
       "source": "openmaptiles",
