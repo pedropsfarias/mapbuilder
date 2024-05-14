@@ -1,6 +1,8 @@
 <template>
   <div v-for="item in items" :key="item.label">
-    <ButtonPrime :icon="item.icon" @click="open(item)" class="mr-2" severity="secondary" />
+    <div class="btn">
+      <ButtonPrime :icon="item.icon" @click="open(item)" severity="secondary" />
+    </div>
   </div>
 </template>
 
@@ -35,3 +37,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.btn {
+  padding: 0 10px;
+}
+.btn:first-child {
+  padding-left: 0;
+}
+</style>

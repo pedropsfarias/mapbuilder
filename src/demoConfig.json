@@ -1,21 +1,12 @@
 {
   "controls": [
     {
-      "name": "measure",
-      "title": "Measures",
-      "component": "map/MeasureComponent.vue",
-      "type": "widget",
-      "placement": "left",
-      "icon": "pi pi-plus",
-      "toolbar": "inline"
-    },
-    {
       "name": "LayerSwitcher",
       "title": "Layer Switcher",
       "component": "map/LayerSwitcherComponent.vue",
       "type": "widget",
       "placement": "left",
-      "icon": "pi pi-circle",
+      "icon": "fg-lg fg-layers",
       "toolbar": "inline"
     },
     {
