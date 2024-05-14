@@ -11,7 +11,7 @@
     <div class="toolbar" v-show="visible.toolbar">
       <RibbonToolbar></RibbonToolbar>
     </div>
-    <div class="left-sidebar" v-show="visible.left">
+    <div ref="leftSection" class="left-sidebar" v-show="visible.left">
       <div
         class="left resizer"
         ref="leftResizer"
@@ -141,6 +141,8 @@ export default {
 
       this.$refs.mapSection.style.maxHeight = `calc(${bodyHeight}px - ${headerHeight + toolbarHeight + footerHeight}px)`;
       this.$refs.mapSection.style.maxWidth = `calc(${bodyWidth}px - ${leftSidebarWidth + rightSidebarWidth})`;
+
+      this.$refs.leftSection.style.maxHeight = `calc(${bodyHeight}px - ${headerHeight + toolbarHeight}px)`;
 
       this.$refs.container.style.gridTemplateRows = `${headerHeight}px ${toolbarHeight}px auto ${footerHeight}px`;
       this.$refs.container.style.gridTemplateColumns = `${leftSidebarWidth}px auto ${rightSidebarWidth}px`;
