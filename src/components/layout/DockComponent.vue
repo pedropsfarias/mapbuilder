@@ -56,10 +56,9 @@ export default {
       };
       this.items.push(item);
       setTimeout(() => {
+        let height = this.$refs.dock.clientHeight;
         this.activeIndex = this.items.length - 1;
         this.setTabSize();
-
-        let height = this.$refs.dock.clientHeight;
         this.panelHeight = `${height - 42}px`;
       }, 100);
     },

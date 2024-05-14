@@ -14,12 +14,12 @@
             "collapsed": true,
             "children": [
               { "id": "buildings", "collapsed": false, "name": "Buildings" },
-              { "id": "tunnels", "collapsed": true, "name": "Tunnels" },
+              { "id": "tunnels", "collapsed": false, "name": "Tunnels" },
               { "id": "land", "collapsed": false, "name": "Land" },
               { "id": "places", "collapsed": false, "name": "Places" },
               { "id": "water", "collapsed": false, "name": "Water" },
               { "id": "roads", "collapsed": false, "name": "Roads" },
-              { "id": "bridges", "collapsed": true, "name": "Bridges" }
+              { "id": "bridges", "collapsed": false, "name": "Bridges" }
             ]
           }
         ]

@@ -2,7 +2,8 @@
   <div>
     <Tree
       ref="layers"
-      v-model:selectionKeys="selectedKey"
+      v-model:selectionKeys="selectedKeys"
+      v-model:expandedKeys="expandedKeys"
       :value="nodes"
       :filter="true"
       filterMode="lenient"
@@ -22,7 +23,8 @@ export default {
     return {
       message: 'Hello from LayerSwitcherComponent',
       nodes: [],
-      selectedKey: {}
+      selectedKeys: {},
+      expandedKeys: {}
     };
   },
   mounted() {
@@ -57,10 +59,12 @@ export default {
             icon: 'pi pi-fw pi-folder',
             children: this.buildNode(child)
           });
-          this.selectedKey[`#${child.id}`] = { checked: false, partialChecked: false };
+          this.selectedKeys[`#${child.id}`] = { checked: false, partialChecked: false };
+          this.expandedKeys[`#${child.id}`] = !child.collapsed;
         });
       }
-      this.selectedKey[`#${node.id}`] = { checked: false, partialChecked: false };
+      this.selectedKeys[`#${node.id}`] = { checked: false, partialChecked: false };
+      this.expandedKeys[`#${node.id}`] = !node.collapsed;
       const layersNodes = this.buildLayersNode(node.id);
       nodes = nodes.concat(layersNodes);
       return nodes;
@@ -76,7 +80,7 @@ export default {
             label: layer.metadata.name,
             data: layer
           });
-          this.selectedKey[layer.id] = { checked: layer.metadata.enabled, partialChecked: false };
+          this.selectedKeys[layer.id] = { checked: layer.metadata.enabled, partialChecked: false };
         }
       });
       return nodes;
@@ -88,8 +92,8 @@ export default {
           let allChecked = true;
           let someChecked = false;
           node.children.forEach((child) => {
-            if (this.selectedKey[child.key]) {
-              if (!this.selectedKey[child.key].checked) {
+            if (this.selectedKeys[child.key]) {
+              if (!this.selectedKeys[child.key].checked) {
                 allChecked = false;
               } else {
                 someChecked = true;
@@ -99,11 +103,11 @@ export default {
             }
           });
           if (allChecked) {
-            this.selectedKey[node.key] = { checked: true, partialChecked: false };
+            this.selectedKeys[node.key] = { checked: true, partialChecked: false };
           } else if (someChecked) {
-            this.selectedKey[node.key] = { checked: false, partialChecked: true };
+            this.selectedKeys[node.key] = { checked: false, partialChecked: true };
           } else {
-            this.selectedKey[node.key] = { checked: false, partialChecked: false };
+            this.selectedKeys[node.key] = { checked: false, partialChecked: false };
           }
         }
       });
