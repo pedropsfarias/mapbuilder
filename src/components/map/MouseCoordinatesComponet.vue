@@ -12,12 +12,13 @@ export default {
     };
   },
   mounted() {
-    MapSingleton.getInstance()
-      .getMap()
-      .on('mousemove', (evt) => {
-        const coord = [evt.lngLat.lng, evt.lngLat.lat];
-        this.coordinates = gd2dms(coord);
-      });
+    const map = MapSingleton.getInstance().getMap();
+    map.on('mousemove', (evt) => {
+      const coord = [evt.lngLat.lng, evt.lngLat.lat];
+      this.coordinates = gd2dms(coord);
+    });
+
+    this.coordinates = gd2dms([map.getCenter().lng, map.getCenter().lat]);
   }
 };
 </script>

@@ -13,14 +13,22 @@ import { mapStores } from 'pinia';
 import appStatusStore from '@/stores/appStatusStore.js';
 import MapSingleton from '@/classes/MapSingleton.js';
 import MouseCoordinatesComponet from './map/MouseCoordinatesComponet.vue';
+import NominalScaleCompeonent from './map/NominalScaleCompeonent.vue';
+import GraphicalScaleComponent from './map/GraphicalScaleComponent.vue';
 import { markRaw } from 'vue';
 export default {
   components: {
-    MouseCoordinatesComponet
+    MouseCoordinatesComponet,
+    NominalScaleCompeonent,
+    GraphicalScaleComponent
   },
   data() {
     return {
-      footerComponents: [markRaw(MouseCoordinatesComponet)],
+      footerComponents: [
+        markRaw(MouseCoordinatesComponet),
+        markRaw(NominalScaleCompeonent),
+        markRaw(GraphicalScaleComponent)
+      ],
       components: []
     };
   },

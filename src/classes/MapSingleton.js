@@ -19,6 +19,8 @@ class MapSingleton {
         container,
         ...options
       })
+
+      window.mapp = this.map;
     }
     return this.map
   }
