@@ -1,5 +1,9 @@
 <template>
   <div id="map">
+    <div class="map-toolbar">
+      <Zoom direction="1" />
+      <Zoom direction="-1" />
+    </div>
     <div class="map-footer">
       <div v-for="(component, i) in components" :key="i" class="map-footer-info">
         <component :is="component" />
@@ -15,12 +19,14 @@ import MapSingleton from '@/classes/MapSingleton.js';
 import MouseCoordinatesComponet from './map/MouseCoordinatesComponet.vue';
 import NominalScaleCompeonent from './map/NominalScaleCompeonent.vue';
 import GraphicalScaleComponent from './map/GraphicalScaleComponent.vue';
+import Zoom from './map/ZoomComponent.vue';
 import { markRaw } from 'vue';
 export default {
   components: {
     MouseCoordinatesComponet,
     NominalScaleCompeonent,
-    GraphicalScaleComponent
+    GraphicalScaleComponent,
+    Zoom
   },
   data() {
     return {
@@ -94,5 +100,17 @@ export default {
   user-select: none;
   margin: 0 2px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.map-toolbar {
+  position: absolute;
+  bottom: 1.8rem;
+  right: 1rem;
+  width: 30px;
+  padding: 0 5px;
+}
+
+.map-toolbar > * {
+  margin-bottom: 0.5rem;
 }
 </style>

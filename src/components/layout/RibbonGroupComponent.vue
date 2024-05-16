@@ -30,7 +30,7 @@ export default {
       default: '100%'
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -39,6 +39,8 @@ export default {
   border: 1px solid #e8e8e8;
   border-radius: 0.5rem;
   overflow: hidden;
+  float: left;
+  margin-left: 0.5rem;
 }
 
 .group-title {

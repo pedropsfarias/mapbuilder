@@ -1,8 +1,10 @@
 <template>
-  <div :style="`
+  <div
+    :style="`
     grid-column: span ${cols};
     grid-row: span ${rows};
-  `">
+  `"
+  >
     <div :class="{ 'group-item': !hasTitle, 'group-item-with-title': hasTitle }">
       <div class="group-item-title">{{ title }}</div>
       <slot></slot>
@@ -28,20 +30,21 @@ export default {
     }
   },
   data() {
-    return {}
+    return {};
   },
   computed: {
     hasTitle() {
-      return this.title.length > 0
+      return this.title.length > 0;
     }
   }
-}
+};
 </script>
 
 <style scoped>
 .group-item {
   position: relative;
   padding: 0.4rem 0.25rem;
+  height: 100%;
 }
 
 .group-item-with-title {

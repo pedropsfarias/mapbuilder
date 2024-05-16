@@ -9,8 +9,7 @@ import { defineAsyncComponent, markRaw } from 'vue';
 
 export default {
   name: 'ToolbarComponent',
-  components: {
-  },
+  components: {},
   props: {},
   data() {
     return {
@@ -25,17 +24,19 @@ export default {
     addControl(config) {
       const item = {
         title: config.title,
-        component: markRaw(defineAsyncComponent(() => import(/* @vite-ignore */ '../' + config.component)))
+        component: markRaw(
+          defineAsyncComponent(() => import(/* @vite-ignore */ '../' + config.component))
+        )
       };
       this.items.push(item);
-    },
+    }
   }
 };
 </script>
 
 <style scoped>
 .content {
-  padding: 0.5rem;
+  padding: 0.5rem 0;
   position: relative;
   background-color: #fff;
   width: 100%;

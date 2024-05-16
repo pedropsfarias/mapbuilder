@@ -10,6 +10,15 @@
       "toolbar": "inline"
     },
     {
+      "name": "navigation",
+      "title": "Navigation",
+      "component": "map/NavigationComponent.vue",
+      "type": "widget",
+      "placement": "ribbon",
+      "icon": "pi pi-map",
+      "toolbar": "ribbon"
+    },
+    {
       "name": "measure2",
       "title": "Measures",
       "component": "map/MeasureComponent.vue",
