@@ -111,6 +111,12 @@ export default {
       this.resize();
     });
 
+    document.addEventListener('fullscreenchange', () => {
+      setTimeout(() => {
+        this.resize();
+      }, 100);
+    });
+
     this.app.registerCommand('layout:hideDock', this.hide);
     this.app.registerCommand('layout:showDock', this.show);
 
