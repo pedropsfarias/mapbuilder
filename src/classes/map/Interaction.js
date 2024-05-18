@@ -1,4 +1,6 @@
 import MapSingleton from '../MapSingleton';
+import { generateId } from '@/helpers/ids';
+
 import {
   distance,
   point,
@@ -7,12 +9,16 @@ import {
   segmentEach,
   coordAll,
   lineString,
-  lineToPolygon
+  lineToPolygon,
+  envelope
 } from '@turf/turf';
 
 class Interaction {
   constructor(snap = true, tolerance = 3, minZoom = 16) {
+    this.id = generateId();
     this.map = MapSingleton.getInstance().getMap();
+    this.snapSource = `__interactionSnap${this.id}`;
+    this.drawSource = `__interactionDraw${this.id}`;
     this.snapEnabled = snap;
     this.tolerance = tolerance;
     this.minZoom = minZoom;
@@ -28,20 +34,20 @@ class Interaction {
    * @returns {void}
    */
   _createInternalLayer() {
-    this.map.addSource('__interactionSnap', {
+    this.map.addSource(this.snapSource, {
       'type': 'geojson',
       'data': this._getEmptyDataSource()
     });
 
-    this.map.addSource('__interactionDraw', {
+    this.map.addSource(this.drawSource, {
       'type': 'geojson',
       'data': this._getEmptyDataSource()
     });
 
     this.map.addLayer({
-      'id': '__interactionSnap',
+      'id': this.snapSource,
       "type": "symbol",
-      'source': '__interactionSnap',
+      'source': this.snapSource,
       "layout": {
         "text-field": "×",
         "text-size": 24,
@@ -53,9 +59,9 @@ class Interaction {
 
     //Point
     this.map.addLayer({
-      'id': '__interactionDrawPoint',
+      'id': `${this.drawSource}point`,
       'type': 'circle',
-      'source': '__interactionDraw',
+      'source': this.drawSource,
       'paint': {
         'circle-radius': 2,
         'circle-color': '#f0f',
@@ -65,9 +71,9 @@ class Interaction {
 
     //LineString
     this.map.addLayer({
-      'id': '__interactionDraw',
+      'id': `${this.drawSource}line`,
       'type': 'line',
-      'source': '__interactionDraw',
+      'source': this.drawSource,
       'layout': {
         'line-join': 'round',
         'line-cap': 'round'
@@ -81,9 +87,9 @@ class Interaction {
 
     //Polygon
     this.map.addLayer({
-      'id': '__interactionDrawFill',
+      'id': `${this.drawSource}polygon`,
       'type': 'fill',
-      'source': '__interactionDraw',
+      'source': this.drawSource,
       'layout': {},
       'paint': {
         'fill-color': '#f0f',
@@ -104,7 +110,7 @@ class Interaction {
   _snap(e) {
     const zoom = this.map.getZoom();
     if (zoom < this.minZoom) {
-      this.map.getSource('__interactionSnap').setData(this._getEmptyDataSource());
+      this.map.getSource(this.snapSource).setData(this._getEmptyDataSource());
       this.snapedPoint = null;
       return;
     }
@@ -117,7 +123,7 @@ class Interaction {
     const features = this.map.queryRenderedFeatures(bbox);
 
     if (!features.length) {
-      this.map.getSource('__interactionSnap').setData(this._getEmptyDataSource());
+      this.map.getSource(this.snapSource).setData(this._getEmptyDataSource());
       this.snapedPoint = null;
       return;
     }
@@ -129,9 +135,9 @@ class Interaction {
       if (geom.type === 'Point') {
         const dist = distance(geom, mousePoint) * 1000.0;
         if (dist < this.tolerance) {
-          this.map.getSource('__interactionSnap').setData(feature);
+          this.map.getSource(this.snapSource).setData(feature);
         } else {
-          this.map.getSource('__interactionSnap').setData(this._getEmptyDataSource());
+          this.map.getSource(this.snapSource).setData(this._getEmptyDataSource());
         }
 
       } else if (geom.type == 'MultiPolygon' || geom.type == 'Polygon') {
@@ -146,7 +152,7 @@ class Interaction {
 
         const nearest = features[0];
         const nearestPoint = nearestPointOnLine(nearest, mousePoint);
-        this.map.getSource('__interactionSnap').setData(nearestPoint);
+        this.map.getSource(this.snapSource).setData(nearestPoint);
 
       } else if (geom.type == 'LineString' || geom.type == 'MultiLineString') {
         let features = [];
@@ -160,7 +166,7 @@ class Interaction {
 
         const nearest = features[0];
         const nearestPoint = nearestPointOnLine(nearest, mousePoint);
-        this.map.getSource('__interactionSnap').setData(nearestPoint);
+        this.map.getSource(this.snapSource).setData(nearestPoint);
 
       }
     }
@@ -205,7 +211,7 @@ class Interaction {
         this.mousePoint = point([e.lngLat.lng, e.lngLat.lat]);
         const clickPoint = this.snapedPoint || this.mousePoint;
         this.map.off('mousemove', this._mouseMoveFunction);
-        this.map.getSource('__interactionSnap').setData(this._getEmptyDataSource());
+        this.map.getSource(this.snapSource).setData(this._getEmptyDataSource());
         this.map.getCanvas().style.cursor = 'unset';
         resolve(clickPoint);
       });
@@ -256,7 +262,7 @@ class Interaction {
         features.push(lineToPolygon(lineString(lineStringCoords)));
       }
 
-      this.map.getSource('__interactionDraw').setData({
+      this.map.getSource(this.drawSource).setData({
         'type': 'FeatureCollection',
         'features': features
       });
@@ -282,8 +288,8 @@ class Interaction {
         this.map.off('mousemove', this._mouseMoveFunction);
         this.map.off('mousemove', mouseMoveFnc);
         this.map.off('click', clickFnc);
-        this.map.getSource('__interactionSnap').setData(this._getEmptyDataSource());
-        this.map.getSource('__interactionDraw').setData(this._getEmptyDataSource());
+        this.map.getSource(this.snapSource).setData(this._getEmptyDataSource());
+        this.map.getSource(this.drawSource).setData(this._getEmptyDataSource());
         this.map.getCanvas().style.cursor = 'unset';
 
         points.pop();
@@ -304,6 +310,49 @@ class Interaction {
 
         reject();
       });
+    });
+  }
+
+  _watchRectangle() {
+
+    return new Promise((resolve) => {
+
+      let points = {
+        initial: null,
+        final: null
+      };
+
+      const moveFnc = (e) => {
+        if (points.initial) {
+          const bbox = envelope(lineString([points.initial.geometry.coordinates, [e.lngLat.lng, points.initial.geometry.coordinates[1]], [e.lngLat.lng, e.lngLat.lat], [points.initial.geometry.coordinates[0], e.lngLat.lat], points.initial.geometry.coordinates]));
+          this.map.getSource(this.drawSource).setData(bbox);
+        }
+      };
+
+      const clickFnc = (e) => {
+        if (!points.initial) {
+          points.initial = point([e.lngLat.lng, e.lngLat.lat]);
+        } else {
+          points.final = point([e.lngLat.lng, e.lngLat.lat]);
+        }
+
+        if (points.initial && points.final) {
+          const bbox = envelope(lineString([points.initial.geometry.coordinates, points.final.geometry.coordinates]));
+
+          this.map.off('mousemove', moveFnc);
+          this.map.off('click', clickFnc);
+
+          this.map.getSource(this.snapSource).setData(this._getEmptyDataSource());
+          this.map.getSource(this.drawSource).setData(this._getEmptyDataSource());
+          this.map.getCanvas().style.cursor = 'unset';
+
+          resolve(bbox);
+        }
+      };
+
+      this.map.on('mousemove', moveFnc);
+      this.map.on('click', clickFnc);
+
     });
   }
 
@@ -342,6 +391,13 @@ class Interaction {
   async getPolygon() {
     this._watchMouseMove();
     const points = await this._watchMultiMouseClick("Polygon");
+    console.log("points", points);
+    return points;
+  }
+
+  async getRectangle() {
+    this._watchMouseMove();
+    const points = await this._watchRectangle();
     console.log("points", points);
     return points;
   }

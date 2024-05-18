@@ -49,12 +49,61 @@
         style="height: 100% !important"
       />
     </RibbonItemGroupComponent>
+    <RibbonItemGroupComponent rows="1" cols="3">
+      <Button
+        @click="zoomByRect"
+        label="Ver região"
+        v-tooltip="'Zoom por região'"
+        icon="fg-lg fg-extent"
+        severity="secondary"
+        outlined
+        class="w-100 h-100"
+        style="height: 100% !important"
+      />
+    </RibbonItemGroupComponent>
+
+    <RibbonItemGroupComponent rows="1" cols="1">
+      <Button
+        @click="alignNorth"
+        v-tooltip="'Alinhar com o norte'"
+        icon="fg-lg fg-north-arrow"
+        severity="secondary"
+        outlined
+        class="w-100 h-100"
+        style="height: 100% !important"
+      />
+    </RibbonItemGroupComponent>
+
+    <RibbonItemGroupComponent rows="1" cols="1">
+      <Button
+        @click="view3D"
+        v-tooltip="'Ver em 3D'"
+        icon="fg-lg fg-layer-height"
+        severity="secondary"
+        outlined
+        class="w-100 h-100"
+        style="height: 100% !important"
+      />
+    </RibbonItemGroupComponent>
+
+    <RibbonItemGroupComponent rows="1" cols="1">
+      <Button
+        @click="view2D"
+        v-tooltip="'Ver em 2D'"
+        icon="fg fg-proj-square"
+        severity="secondary"
+        outlined
+        class="w-100 h-100"
+        style="height: 100% !important"
+      />
+    </RibbonItemGroupComponent>
   </RibbonGroupComponent>
 </template>
 
 <script>
 import MapSingleton from '@/classes/MapSingleton.js';
 import { rotateArray } from '@/helpers/arrays.js';
+import Interaction from '@/classes/map/Interaction';
 export default {
   name: 'NavigationComponent',
   data() {
@@ -153,6 +202,35 @@ export default {
       } else {
         this.openFullscreen();
       }
+    },
+    async zoomByRect() {
+      console.log('zoomByRect');
+      const interaction = new Interaction(false);
+      const rect = await interaction.getRectangle();
+
+      if (rect) {
+        this.map.fitBounds(rect.bbox, {
+          padding: 20
+        });
+      }
+    },
+    alignNorth() {
+      this.map.easeTo({
+        bearing: 0,
+        duration: 1000
+      });
+    },
+    view3D() {
+      this.map.easeTo({
+        pitch: 60,
+        duration: 1000
+      });
+    },
+    view2D() {
+      this.map.easeTo({
+        pitch: 0,
+        duration: 1000
+      });
     }
   }
 };
