@@ -5,7 +5,7 @@
     </template>
 
     <template #center>
-      <InputText placeholder="Procurar" />
+      <SearchComponent />
     </template>
 
     <template #end>
@@ -16,9 +16,11 @@
 
 <script>
 import InlineToolbarComponent from '@/components/layout/InlineToolbarComponent.vue';
+import SearchComponent from '@/components/SearchComponent.vue';
 export default {
   components: {
-    InlineToolbarComponent
+    InlineToolbarComponent,
+    SearchComponent
   },
   data() {
     return {
