@@ -7,6 +7,7 @@
     optionGroupLabel="label"
     optionGroupChildren="items"
     placeholder="Pesquisar..."
+    ref="search"
   >
     <template #optiongroup="slotProps">
       <div class="flex align-items-center country-item">
@@ -24,15 +25,17 @@
 
 <script>
 import CoordinateProvider from '@/classes/search/CoordinateProvider';
+import AdressProvider from '@/classes/search/AdressProvider';
 import MapSingleton from '@/classes/MapSingleton';
 
 export default {
   name: 'SearchComponent',
   data() {
     return {
-      map: MapSingleton.getInstance().getMap(),
+      map: null,
       selection: null,
-      results: null
+      results: null,
+      time: null
     };
   },
   mounted() {
@@ -41,21 +44,60 @@ export default {
     }, 1000);
   },
   methods: {
-    search(value) {
-      const results = [];
-
-      const result = CoordinateProvider.seach(value.query);
-      if (result && result.length) {
-        results.push({
-          label: 'Ir para...',
-          items: [...result]
-        });
+    async search(value) {
+      if (this.time) {
+        clearTimeout(this.time);
       }
 
-      this.results = results;
+      this.time = setTimeout(async () => {
+        if (!value.query) {
+          this.results = [
+            {
+              label: 'Digite ao menos 3 caracteres...',
+              items: []
+            }
+          ];
+          return;
+        }
+
+        if (value.query.length < 3) {
+          this.results = [
+            {
+              label: 'Digite ao menos 3 caracteres...',
+              items: []
+            }
+          ];
+          return;
+        }
+        const results = [];
+
+        const coordsResult = CoordinateProvider.seach(value.query);
+        if (coordsResult && coordsResult.length) {
+          results.push({
+            label: 'Ir para...',
+            items: [...coordsResult]
+          });
+        }
+
+        const addressResult = await AdressProvider.seach(value.query);
+        if (addressResult && addressResult.length) {
+          results.push({
+            label: 'Locais',
+            items: [...addressResult]
+          });
+        }
+
+        this.results = results;
+      }, 1500);
     },
     execute(item) {
       if (item.type == 'coordinates') {
+        this.map.flyTo({
+          center: [item.lng, item.lat],
+          zoom: 16,
+          speed: 2
+        });
+      } else if (item.type == 'address') {
         this.map.flyTo({
           center: [item.lng, item.lat],
           zoom: 16,
@@ -65,7 +107,8 @@ export default {
 
       setTimeout(() => {
         this.selection = null;
-      }, 100);
+        this.$refs.search.$el.querySelector('input').blur();
+      }, 1000);
     }
   }
 };
