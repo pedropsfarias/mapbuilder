@@ -5,7 +5,7 @@
     "groups": [
       {
         "id": "base",
-        "name": "Basemap",
+        "name": "Mapas base",
         "collapsed": false,
         "children": [
           {
@@ -26,8 +26,9 @@
       }
     ]
   },
-  "center": [-48.9628813, -26.2634146],
-  "zoom": 11,
+  "center": [-50.88115182194667, -29.374007913656136],
+  "zoom": 16,
+  "maxZoom": 20,
   "sources": {
     "openmaptiles": {
       "type": "vector",
@@ -35,11 +36,49 @@
         "https://a.geomattic.com/data/v3/{z}/{x}/{y}.pbf",
         "https://b.geomattic.com/data/v3/{z}/{x}/{y}.pbf"
       ]
+    },
+    "esri": {
+      "type": "raster",
+      "tiles": [
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+      ]
+    },
+    "google": {
+      "type": "raster",
+      "tiles": ["https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"]
+    },
+    "gramadorural": {
+      "type": "raster",
+      "tiles": [
+        "https://c.geomattic.com/urbano3/{z}/{x}/{y}.png",
+        "https://d.geomattic.com/urbano3/{z}/{x}/{y}.png"
+      ]
     }
   },
   "sprite": "https://demotiles.maplibre.org/styles/osm-bright-gl-style/sprite",
   "glyphs": "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
   "layers": [
+    {
+      "id": "esri-aereal",
+      "title": "Esri Aereal",
+      "type": "raster",
+      "source": "esri",
+      "metadata": { "group": "base", "name": "Imagem de satélite", "enabled": false }
+    },
+    {
+      "id": "google-satellite",
+      "title": "Google Satellite",
+      "type": "raster",
+      "source": "google",
+      "metadata": { "group": "base", "name": "Google satélite", "enabled": false }
+    },
+    {
+      "id": "gramadorural",
+      "title": "Gramado Rural",
+      "type": "raster",
+      "source": "gramadorural",
+      "metadata": { "group": "base", "name": "Gramado Rural", "enabled": false }
+    },
     {
       "id": "background",
       "title": "Background",

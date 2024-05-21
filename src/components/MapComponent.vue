@@ -43,9 +43,7 @@ export default {
     createMap() {
       console.log('createMap');
 
-      MapSingleton.getInstance().initializeMap({
-        options: { zoom: 14, center: [-49.644602, -27.2108] }
-      });
+      MapSingleton.getInstance().initializeMap({});
 
       this.appStatusStore.setMapIsDone(true);
       this.components = this.footerComponents;

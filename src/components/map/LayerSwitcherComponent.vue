@@ -29,6 +29,7 @@ export default {
   },
   mounted() {
     this.getLayers();
+    this.onSelectionChange(this.selectedKeys);
   },
   methods: {
     getLayers() {
@@ -36,7 +37,8 @@ export default {
       const groups = map.getStyle().metadata['groups'];
 
       const nodes = [];
-      groups.forEach((group) => {
+      for (let i = groups.length - 1; i >= 0; i--) {
+        const group = groups[i];
         nodes.push({
           key: `#${group.id}`,
           label: group.name,
@@ -44,14 +46,16 @@ export default {
           icon: 'pi pi-fw pi-folder',
           children: this.buildNode(group)
         });
-      });
+      }
+
       this.nodes = nodes;
       this.updateParentNodes(this.nodes);
     },
     buildNode(node) {
       let nodes = [];
       if (node.children) {
-        node.children.forEach((child) => {
+        for (let i = node.children.length - 1; i >= 0; i--) {
+          const child = node.children[i];
           nodes.push({
             key: `#${child.id}`,
             label: child.name,
@@ -61,7 +65,7 @@ export default {
           });
           this.selectedKeys[`#${child.id}`] = { checked: false, partialChecked: false };
           this.expandedKeys[`#${child.id}`] = !child.collapsed;
-        });
+        }
       }
       this.selectedKeys[`#${node.id}`] = { checked: false, partialChecked: false };
       this.expandedKeys[`#${node.id}`] = !node.collapsed;
@@ -73,7 +77,8 @@ export default {
       const map = MapSingleton.getInstance().getMap();
       const layers = map.getStyle().layers;
       const nodes = [];
-      layers.forEach((layer) => {
+      for (let i = layers.length - 1; i >= 0; i--) {
+        const layer = layers[i];
         if (layer.metadata && layer.metadata['group'] === nodeId) {
           nodes.push({
             key: layer.id,
@@ -82,7 +87,7 @@ export default {
           });
           this.selectedKeys[layer.id] = { checked: layer.metadata.enabled, partialChecked: false };
         }
-      });
+      }
       return nodes;
     },
     updateParentNodes(nodes) {
