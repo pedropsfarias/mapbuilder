@@ -29,7 +29,6 @@ export default {
   },
   mounted() {
     this.getLayers();
-    this.onSelectionChange(this.selectedKeys);
   },
   methods: {
     getLayers() {
@@ -120,14 +119,12 @@ export default {
     onSelectionChange(selections) {
       const map = MapSingleton.getInstance().getMap();
       const layers = map.getStyle().layers;
-
       layers.forEach((layer) => {
         if (layer.id.startsWith('_')) return;
-        if (selections[layer.id]) {
-          map.setLayoutProperty(layer.id, 'visibility', 'visible');
-        } else {
-          map.setLayoutProperty(layer.id, 'visibility', 'none');
-        }
+        const selection = selections[layer.id] || {};
+        const enabled = selection.checked || false;
+        const value = enabled ? 'visible' : 'none';
+        map.setLayoutProperty(layer.id, 'visibility', value);
       });
     }
   }
