@@ -20,20 +20,19 @@ class MapSingleton {
         ...options
       })
 
-      // this.map.on('load', () => {
-      setTimeout(() => {
+      this.map.on('load', () => {
+        //setTimeout(() => {
         const layers = this.map.getStyle().layers;
         layers.forEach((layer) => {
           if (layer.id.startsWith('_')) return;
           const metadata = layer.metadata || {};
           const enabled = metadata.enabled || false;
           if (!enabled) {
-            console.log('Disabling layer', layer.id);
             this.map.setLayoutProperty(layer.id, 'visibility', 'none');
           }
         });
-      }, 1000)
-      // });
+        //}, 1000)
+      });
 
       window.mapp = this.map;
     }
