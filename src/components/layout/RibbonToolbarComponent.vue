@@ -5,7 +5,8 @@
 </template>
 
 <script>
-import { defineAsyncComponent, markRaw } from 'vue';
+import { markRaw } from 'vue';
+import components from '@/asyncComponents';
 
 export default {
   name: 'ToolbarComponent',
@@ -24,9 +25,7 @@ export default {
     addControl(config) {
       const item = {
         title: config.title,
-        component: markRaw(
-          defineAsyncComponent(() => import(/* @vite-ignore */ '../' + config.component))
-        )
+        component: markRaw(components[config.name])
       };
       this.items.push(item);
     }

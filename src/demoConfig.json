@@ -1,7 +1,7 @@
 {
   "controls": [
     {
-      "name": "LayerSwitcher",
+      "name": "LayerSwitcherComponent",
       "title": "Layer Switcher",
       "component": "map/LayerSwitcherComponent.vue",
       "type": "widget",
@@ -10,7 +10,7 @@
       "toolbar": "inline"
     },
     {
-      "name": "navigation",
+      "name": "NavigationComponent",
       "title": "Navigation",
       "component": "map/NavigationComponent.vue",
       "type": "widget",
@@ -19,7 +19,7 @@
       "toolbar": "ribbon"
     },
     {
-      "name": "measure2",
+      "name": "MeasureComponent",
       "title": "Measures",
       "component": "map/MeasureComponent.vue",
       "type": "widget",
