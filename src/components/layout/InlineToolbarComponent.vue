@@ -25,6 +25,9 @@ export default {
   methods: {
     addControl(item) {
       this.items.push(item);
+      if (item.open) {
+        this.open(item);
+      }
     },
     open(item) {
       console.log('open', item);
@@ -42,6 +45,7 @@ export default {
 .btn {
   padding: 0 10px;
 }
+
 .btn:first-child {
   padding-left: 0;
 }
