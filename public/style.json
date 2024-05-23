@@ -50,6 +50,13 @@
     "gramadorural": {
       "type": "raster",
       "tiles": [
+        "https://c.geomattic.com/rural2/{z}/{x}/{y}.png",
+        "https://d.geomattic.com/rural2/{z}/{x}/{y}.png"
+      ]
+    },
+    "gramadourbano": {
+      "type": "raster",
+      "tiles": [
         "https://c.geomattic.com/urbano3/{z}/{x}/{y}.png",
         "https://d.geomattic.com/urbano3/{z}/{x}/{y}.png"
       ]
@@ -70,14 +77,21 @@
       "title": "Google Satellite",
       "type": "raster",
       "source": "google",
-      "metadata": { "group": "base", "name": "Google satélite", "enabled": true }
+      "metadata": { "group": "base", "name": "Google satélite", "enabled": false }
+    },
+    {
+      "id": "gramadourbano",
+      "title": "Gramado Urbano",
+      "type": "raster",
+      "source": "gramadorural",
+      "metadata": { "group": "base", "name": "Gramado Urbano", "enabled": true }
     },
     {
       "id": "gramadorural",
       "title": "Gramado Rural",
       "type": "raster",
       "source": "gramadorural",
-      "metadata": { "group": "base", "name": "Gramado Rural", "enabled": false }
+      "metadata": { "group": "base", "name": "Gramado Rural", "enabled": true }
     },
     {
       "id": "background",
