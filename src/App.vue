@@ -1,12 +1,13 @@
 <template>
-  <MainLayoutComponent />
+  <RouterView />
 </template>
 
 <script>
-import MainLayoutComponent from './components/layout/MainLayoutComponent.vue';
+import { RouterView } from 'vue-router';
+
 export default {
   components: {
-    MainLayoutComponent
+    RouterView
   }
 };
 </script>
