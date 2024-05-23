@@ -1,17 +1,12 @@
 <template>
   <div>
-    <Tree
-      ref="layers"
-      v-model:selectionKeys="selectedKeys"
-      v-model:expandedKeys="expandedKeys"
-      :value="nodes"
-      :filter="true"
-      filterMode="lenient"
-      filterPlaceholder="Procurar por camadas..."
-      @update:selectionKeys="onSelectionChange"
-      selectionMode="checkbox"
-      class="w-full md:w-30rem"
-    ></Tree>
+    <Tree ref="layers" v-model:selectionKeys="selectedKeys" v-model:expandedKeys="expandedKeys" :value="nodes"
+      :filter="true" filterMode="lenient" filterPlaceholder="Procurar por camadas..."
+      @update:selectionKeys="onSelectionChange" selectionMode="checkbox" class="w-full md:w-30rem">
+      <template #default="slotProps">
+        {{ slotProps.node.label }}
+      </template>
+    </Tree>
   </div>
 </template>
 
