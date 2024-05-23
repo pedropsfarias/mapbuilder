@@ -21,7 +21,8 @@
 </template>
 
 <script>
-import { defineAsyncComponent, markRaw } from 'vue';
+import { markRaw } from 'vue';
+import components from '@/asyncComponents';
 
 export default {
   name: 'DockComponent',
@@ -50,9 +51,7 @@ export default {
       this.app.run('layout:showDock', this.name);
       const item = {
         title: config.title,
-        component: markRaw(
-          defineAsyncComponent(() => import(/* @vite-ignore */ '../' + config.component))
-        )
+        component: markRaw(components[config.name])
       };
       this.items.push(item);
       setTimeout(() => {

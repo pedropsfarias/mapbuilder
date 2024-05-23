@@ -77,13 +77,13 @@
       "title": "Google Satellite",
       "type": "raster",
       "source": "google",
-      "metadata": { "group": "base", "name": "Google satélite", "enabled": false }
+      "metadata": { "group": "base", "name": "Google satélite", "enabled": true }
     },
     {
       "id": "gramadourbano",
       "title": "Gramado Urbano",
       "type": "raster",
-      "source": "gramadorural",
+      "source": "gramadourbano",
       "metadata": { "group": "base", "name": "Gramado Urbano", "enabled": true }
     },
     {
