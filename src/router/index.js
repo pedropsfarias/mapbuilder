@@ -10,7 +10,7 @@ const router = createRouter({
       component: MainLayoutComponent
     },
     {
-      path: '/config',
+      path: '/configuration',
       name: 'config',
       component: () => import('@/components/layout/ConfigurationLayoutComponent.vue')
     }
