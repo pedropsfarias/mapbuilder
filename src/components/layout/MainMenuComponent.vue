@@ -9,7 +9,7 @@
     </template>
 
     <template #end>
-      <SplitButton label="Save" :model="items"></SplitButton>
+      <UserMenuComponent />
     </template>
   </Toolbar>
 </template>
@@ -17,10 +17,13 @@
 <script>
 import InlineToolbarComponent from '@/components/layout/InlineToolbarComponent.vue';
 import SearchComponent from '@/components/SearchComponent.vue';
+import UserMenuComponent from './UserMenuComponent.vue';
+
 export default {
   components: {
     InlineToolbarComponent,
-    SearchComponent
+    SearchComponent,
+    UserMenuComponent
   },
   data() {
     return {
