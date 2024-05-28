@@ -12,9 +12,11 @@
     </div>
     <div class="content">
       <Card>
-        <template #title>{{ title }}</template>
+        <template #title>
+          <slot name="title" />
+        </template>
         <template #content>
-          <component :is="component" />
+          <slot name="content" />
         </template>
       </Card>
     </div>
@@ -23,18 +25,12 @@
 
 <script>
 import UserMenuComponent from './UserMenuComponent.vue';
-import { defineAsyncComponent, markRaw } from 'vue';
-
-const components = {
-  entity: markRaw(defineAsyncComponent(() => import('./../config/ConfigEntityComponent.vue')))
-};
 
 export default {
-  name: 'MainLayoutComponent',
+  name: 'ConfigurationLayoutComponent',
   components: {
     UserMenuComponent
   },
-  props: {},
   data() {
     return {
       menuItems: [
@@ -142,68 +138,8 @@ export default {
       title: ''
     };
   },
-  mounted() {
-    this.loadComponent();
-  },
-  methods: {
-    loadComponent() {
-      const { group, name } = this.$route.params;
-
-      const componentName = `${group}-${name}`.toLocaleLowerCase();
-
-      switch (componentName) {
-        case 'models-entity':
-          this.component = components.entity;
-          this.title = 'Entidade';
-          break;
-        case 'models-attributes':
-          this.component = components.atributos;
-          break;
-        case 'models-tipos':
-          this.component = components.tipos;
-          break;
-        case 'models-telas':
-          this.component = components.telas;
-          break;
-        case 'geral-relatórios':
-          this.component = components.relatorios;
-          break;
-        case 'geral-funcionalidades':
-          this.component = components.funcionalidades;
-          break;
-        case 'geral-sistema':
-          this.component = components.sistema;
-          break;
-        case 'mapa-mapas':
-          this.component = components.mapas;
-          break;
-        case 'mapa-grupos':
-          this.component = components.grupos;
-          break;
-        case 'mapa-camadas':
-          this.component = components.camadas;
-          break;
-        case 'segurança-usuários':
-          this.component = components.usuarios;
-          break;
-        case 'segurança-perfis':
-          this.component = components.perfis;
-          break;
-        case 'segurança-permissõessistema':
-          this.component = components.permissoesSistema;
-          break;
-        case 'segurança-permissõesmapa':
-          this.component = components.permissoesMapa;
-          break;
-        case 'segurança-preferências':
-          this.component = components.preferencias;
-          break;
-        default:
-          this.$router.push({ name: 'NotFound' });
-          break;
-      }
-    }
-  }
+  mounted() { },
+  methods: {}
 };
 </script>
 
@@ -212,6 +148,7 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .menu {
   display: flex;
   flex-direction: row;
@@ -222,6 +159,7 @@ export default {
   padding: 1rem;
   background: #fff;
 }
+
 .content {
   width: calc(100% - 250px);
   height: calc(100% - 52px);

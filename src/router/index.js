@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import MainLayoutComponent from '@/components/layout/MainLayoutComponent.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import MainLayoutComponent from '@/components/layout/MainLayoutComponent.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,11 +15,11 @@ const router = createRouter({
       component: MainLayoutComponent
     },
     {
-      path: '/config/:group/:name',
+      path: '/config/models/entity',
       name: 'config',
-      component: () => import('@/components/layout/ConfigurationLayoutComponent.vue')
+      component: () => import('@/pages/config/EntityPageComponent.vue')
     }
   ]
-})
+});
 
-export default router
+export default router;
