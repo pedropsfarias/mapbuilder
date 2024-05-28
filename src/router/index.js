@@ -5,12 +5,17 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('@/components/layout/NotFoundComponent.vue')
+    },
+    {
       path: '/',
       name: 'map',
       component: MainLayoutComponent
     },
     {
-      path: '/configuration',
+      path: '/config/:group/:name',
       name: 'config',
       component: () => import('@/components/layout/ConfigurationLayoutComponent.vue')
     }

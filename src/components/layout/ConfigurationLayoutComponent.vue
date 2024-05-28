@@ -12,13 +12,9 @@
     </div>
     <div class="content">
       <Card>
-        <template #title>Classes</template>
+        <template #title>{{ title }}</template>
         <template #content>
-          <p class="m-0">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur
-            error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis,
-            culpa ratione quam perferendis esse, cupiditate neque quas!
-          </p>
+          <component :is="component" />
         </template>
       </Card>
     </div>
@@ -27,6 +23,12 @@
 
 <script>
 import UserMenuComponent from './UserMenuComponent.vue';
+import { defineAsyncComponent, markRaw } from 'vue';
+
+const components = {
+  entity: markRaw(defineAsyncComponent(() => import('./../config/ConfigEntityComponent.vue')))
+};
+
 export default {
   name: 'MainLayoutComponent',
   components: {
@@ -37,65 +39,171 @@ export default {
     return {
       menuItems: [
         {
-          label: 'Definição das Classes',
-          icon: 'pi pi-envelope',
-          badge: 5,
+          label: 'Modelos',
+          icon: 'pi pi-objects-column',
           items: [
             {
               label: 'Classes',
-              icon: 'pi pi-file-edit',
-              shortcut: '⌘+N'
+              icon: 'pi pi-fw pi-file',
+              command: () => this.toggleConfigMenu('Classes')
             },
             {
               label: 'Atributos',
-              icon: 'pi pi-inbox',
-              badge: 5
+              icon: 'pi pi-fw pi-file',
+              command: () => this.toggleConfigMenu('Atributos')
             },
             {
-              label: 'Relacionamentos',
-              icon: 'pi pi-send',
-              shortcut: '⌘+S'
+              label: 'Tipos',
+              icon: 'pi pi-fw pi-file',
+              command: () => this.toggleConfigMenu('Tipos')
+            },
+            {
+              label: 'Telas',
+              icon: 'pi pi-fw pi-file',
+              command: () => this.toggleConfigMenu('Telas')
+            }
+          ]
+        },
+        {
+          label: 'Geral',
+          icon: 'pi pi-cog',
+          items: [
+            {
+              label: 'Relatórios',
+              icon: 'pi pi-fw pi-file',
+              command: () => this.toggleConfigMenu('Relatórios')
+            },
+            {
+              label: 'Funcionalidades',
+              icon: 'pi pi-fw pi-file',
+              command: () => this.toggleConfigMenu('Funcionalidades')
+            },
+            {
+              label: 'Sistema',
+              icon: 'pi pi-fw pi-file',
+              command: () => this.toggleConfigMenu('Sistema')
+            }
+          ]
+        },
+        {
+          label: 'Mapa',
+          icon: 'pi pi-map',
+          items: [
+            {
+              label: 'Mapas',
+              icon: 'pi pi-fw pi-file',
+              command: () => this.toggleConfigMenu('Mapas')
+            },
+            {
+              label: 'Grupos',
+              icon: 'pi pi-fw pi-file',
+              command: () => this.toggleConfigMenu('Grupos')
+            },
+            {
+              label: 'Camadas',
+              icon: 'pi pi-fw pi-file',
+              command: () => this.toggleConfigMenu('Camadas')
             }
           ]
         },
         {
           label: 'Segurança',
-          icon: 'pi pi-chart-bar',
-          shortcut: '⌘+R',
+          icon: 'pi pi-lock',
           items: [
             {
-              label: 'Sales',
-              icon: 'pi pi-chart-line',
-              badge: 3
+              label: 'Usuários',
+              icon: 'pi pi-fw pi-file',
+              command: () => this.toggleConfigMenu('Usuários')
             },
             {
-              label: 'Products',
-              icon: 'pi pi-list',
-              badge: 6
-            }
-          ]
-        },
-        {
-          label: 'Perfil',
-          icon: 'pi pi-user',
-          shortcut: '⌘+W',
-          items: [
-            {
-              label: 'Settings',
-              icon: 'pi pi-cog',
-              shortcut: '⌘+O'
+              label: 'Perfis',
+              icon: 'pi pi-fw pi-file',
+              command: () => this.toggleConfigMenu('Perfis')
             },
             {
-              label: 'Privacy',
-              icon: 'pi pi-shield',
-              shortcut: '⌘+P'
+              label: 'Permissões Sistema',
+              icon: 'pi pi-fw pi-file',
+              command: () => this.toggleConfigMenu('Permissões Sistema')
+            },
+            {
+              label: 'Permissões Mapa',
+              icon: 'pi pi-fw pi-file',
+              command: () => this.toggleConfigMenu('Permissões Mapa')
+            },
+            {
+              label: 'Preferências',
+              icon: 'pi pi-fw pi-file',
+              command: () => this.toggleConfigMenu('Preferências')
             }
           ]
         }
-      ]
+      ],
+      component: null,
+      title: ''
     };
   },
-  mounted() {}
+  mounted() {
+    this.loadComponent();
+  },
+  methods: {
+    loadComponent() {
+      const { group, name } = this.$route.params;
+
+      const componentName = `${group}-${name}`.toLocaleLowerCase();
+
+      switch (componentName) {
+        case 'models-entity':
+          this.component = components.entity;
+          this.title = 'Entidade';
+          break;
+        case 'models-attributes':
+          this.component = components.atributos;
+          break;
+        case 'models-tipos':
+          this.component = components.tipos;
+          break;
+        case 'models-telas':
+          this.component = components.telas;
+          break;
+        case 'geral-relatórios':
+          this.component = components.relatorios;
+          break;
+        case 'geral-funcionalidades':
+          this.component = components.funcionalidades;
+          break;
+        case 'geral-sistema':
+          this.component = components.sistema;
+          break;
+        case 'mapa-mapas':
+          this.component = components.mapas;
+          break;
+        case 'mapa-grupos':
+          this.component = components.grupos;
+          break;
+        case 'mapa-camadas':
+          this.component = components.camadas;
+          break;
+        case 'segurança-usuários':
+          this.component = components.usuarios;
+          break;
+        case 'segurança-perfis':
+          this.component = components.perfis;
+          break;
+        case 'segurança-permissõessistema':
+          this.component = components.permissoesSistema;
+          break;
+        case 'segurança-permissõesmapa':
+          this.component = components.permissoesMapa;
+          break;
+        case 'segurança-preferências':
+          this.component = components.preferencias;
+          break;
+        default:
+          this.$router.push({ name: 'NotFound' });
+          break;
+      }
+    }
+  }
 };
 </script>
 
@@ -119,6 +227,6 @@ export default {
   height: calc(100% - 52px);
   position: relative;
   float: left;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 </style>
